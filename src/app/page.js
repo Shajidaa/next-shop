@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import FeaturedProducts from "@/components/FeaturedProducts/FeaturedProducts";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
       </section>
 
       {/* Featured Products Section */}
-
+      <FeaturedProducts></FeaturedProducts>
       {/* CTA Section */}
       <section className="bg-blue-600 text-white py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">

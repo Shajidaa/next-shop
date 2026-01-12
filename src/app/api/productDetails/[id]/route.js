@@ -11,6 +11,7 @@ export async function GET(request, { params }) {
 
         "x-tenant-id": tenantValue,
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -20,7 +21,8 @@ export async function GET(request, { params }) {
     const product = await response.json();
     return Response.json(product);
   } catch (error) {
-    console.error("Error fetching product details:", error);
+    console.error("API Route Error:", error);
+
     return Response.json(
       { error: "Failed to fetch product details" },
       { status: 500 }
