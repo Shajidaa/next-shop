@@ -5,13 +5,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import CategoryFilter from "@/components/category";
 import ProductCard from "@/components/ProductCard";
+// import CategoryFilter from "@/components/category-filter";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  // const [products, setFilteredProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,7 +22,7 @@ export default function ProductsPage() {
         const response = await fetch("/api/products");
         const data = await response.json();
         setProducts(data.data);
-        // setFilteredProducts(data);
+        setFilteredProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -29,20 +32,23 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  // useEffect(() => {
-  //   const filtered = products.filter(
-  //     (product) =>
-  //       product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       product.category?.categoryName
-  //         .toLowerCase()
-  //         .includes(searchTerm.toLowerCase())
-  //   );
-  //   setFilteredProducts(filtered);
-  // }, [searchTerm, products]);
-  console.log(products);
+  useEffect(() => {
+    const filtered = products.filter((product) => {
+      const matchesSearch =
+        product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category?.categoryName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "" ||
+        product.category?.categoryId === Number.parseInt(selectedCategory);
+      return matchesSearch && matchesCategory;
+    });
+    setFilteredProducts(filtered);
+  }, [searchTerm, products, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       {/* Header */}
       <section className="bg-white py-8 px-6 border-b">
         <div className="max-w-7xl mx-auto">
@@ -51,7 +57,7 @@ export default function ProductsPage() {
           </h1>
 
           {/* Search Bar */}
-          <div className="relative">
+          <div className="relative mb-6">
             <input
               type="text"
               placeholder="Search products by name or category..."
@@ -60,6 +66,12 @@ export default function ProductsPage() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
+          {/* Category Filter Section */}
+          <CategoryFilter
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
         </div>
       </section>
 
@@ -70,17 +82,17 @@ export default function ProductsPage() {
             <div className="text-center py-12">
               <p className="text-gray-600">Loading products...</p>
             </div>
-          ) : products.length > 0 ? (
+          ) : filteredProducts.length > 0 ? (
             <>
               <p className="text-gray-600 mb-6">
-                Showing {products.length} product
-                {products.length !== 1 ? "s" : ""}
+                Showing {filteredProducts.length} product
+                {filteredProducts.length !== 1 ? "s" : ""}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <ProductCard
-                    product={product}
                     key={product.productId}
+                    product={product}
                   ></ProductCard>
                 ))}
               </div>

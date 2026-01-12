@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
     >
       <div className="bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
         <div className="bg-gray-100 h-48 flex items-center justify-center relative overflow-hidden">
-          {product.thumbnail ? (
+          {/* {product.thumbnail ? (
             <img
               src={product.thumbnail || "/placeholder.svg"}
               alt={product.productName}
@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
             />
           ) : (
             <div className="text-gray-400">No image</div>
-          )}
+          )} */}
           {!product.inStock && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <span className="text-white font-semibold">Out of Stock</span>
