@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Loader2, Mail, Lock, User, ArrowRight, Check } from "lucide-react";
+import { Eye, EyeOff, Loader2, Mail, Lock, User, ArrowRight, Check, Phone, MapPin, Building2 } from "lucide-react";
 
 export default function RegisterForm({ onSubmit, serverError, loading }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,54 +57,27 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
               <User size={18} />
             </div>
             <input
-              {...register("first_name", { 
+              {...register("name", { 
                 required: "First name is required",
                 minLength: { value: 2, message: "Too short" }
               })}
               placeholder="John"
               className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-                errors.first_name 
+                errors.name 
                   ? "border-destructive focus:border-destructive" 
                   : "border-border focus:border-accent"
               }`}
             />
           </div>
-          {errors.first_name && (
+          {errors.name && (
             <p className="text-destructive text-xs mt-1 flex items-center gap-1">
-              <div className="w-1 h-1 bg-destructive rounded-full"></div>
+              <span className="w-1 h-1 bg-destructive rounded-full"></span>
               {errors.first_name.message}
             </p>
           )}
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-foreground block">
-            Last Name
-          </label>
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
-              <User size={18} />
-            </div>
-            <input
-              {...register("last_name", { 
-                required: "Last name is required",
-                minLength: { value: 2, message: "Too short" }
-              })}
-              placeholder="Doe"
-              className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-                errors.last_name 
-                  ? "border-destructive focus:border-destructive" 
-                  : "border-border focus:border-accent"
-              }`}
-            />
-          </div>
-          {errors.last_name && (
-            <p className="text-destructive text-xs mt-1 flex items-center gap-1">
-              <div className="w-1 h-1 bg-destructive rounded-full"></div>
-              {errors.last_name.message}
-            </p>
-          )}
-        </div>
+      
       </div>
 
       {/* Email Field */}
@@ -135,8 +108,85 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
         </div>
         {errors.email && (
           <p className="text-destructive text-xs mt-1 flex items-center gap-1">
-            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            <span className="w-1 h-1 bg-destructive rounded-full"></span>
             {errors.email.message}
+          </p>
+        )}
+      </div>
+
+      {/* Phone and Company Fields */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-foreground block">
+            Phone Number
+          </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+              <Phone size={18} />
+            </div>
+            <input
+              type="tel"
+              {...register("phone", { required: "Phone number is required" })}
+              placeholder="+1 (555) 000-0000"
+              className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+                errors.phone ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+              }`}
+            />
+          </div>
+          {errors.phone && (
+            <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+              <span className="w-1 h-1 bg-destructive rounded-full"></span>
+              {errors.phone.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-foreground block">
+            Company
+          </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+              <Building2 size={18} />
+            </div>
+            <input
+              {...register("company", { required: "Company name is required" })}
+              placeholder="Acme Inc."
+              className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+                errors.company ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+              }`}
+            />
+          </div>
+          {errors.company && (
+            <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+              <span className="w-1 h-1 bg-destructive rounded-full"></span>
+              {errors.company.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Address Field */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-foreground block">
+          Address
+        </label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+            <MapPin size={18} />
+          </div>
+          <input
+            {...register("address", { required: "Address is required" })}
+            placeholder="123 Main St, City, Country"
+            className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+              errors.address ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+            }`}
+          />
+        </div>
+        {errors.address && (
+          <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+            <span className="w-1 h-1 bg-destructive rounded-full"></span>
+            {errors.address.message}
           </p>
         )}
       </div>
@@ -172,7 +222,6 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
           </button>
         </div>
         
-        {/* Password Strength Indicator */}
         {password && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -191,7 +240,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
         
         {errors.password && (
           <p className="text-destructive text-xs mt-1 flex items-center gap-1">
-            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            <span className="w-1 h-1 bg-destructive rounded-full"></span>
             {errors.password.message}
           </p>
         )}
@@ -230,7 +279,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
         </div>
         {errors.confirmPassword && (
           <p className="text-destructive text-xs mt-1 flex items-center gap-1">
-            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            <span className="w-1 h-1 bg-destructive rounded-full"></span>
             {errors.confirmPassword.message}
           </p>
         )}

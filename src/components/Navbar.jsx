@@ -34,6 +34,7 @@ export function Navbar() {
 
   const isActivePath = (path) => pathname === path;
 
+
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
