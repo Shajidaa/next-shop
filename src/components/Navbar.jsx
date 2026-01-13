@@ -50,48 +50,15 @@ export function Navbar() {
               Products
             </Link>
 
-            {/* ২. Private Dynamic Menu (শুধুমাত্র লগইন করলে আসবে) */}
-            {user?.permissions?.map((item) => (
-              <div
-                key={item.id}
-                className="relative group"
-                onMouseEnter={() => setActiveDropdown(item.id)}
-                onMouseLeave={() => setActiveDropdown(null)}
+            {/* ২. Private Dynamic Menu */}
+            {user?.permissions && (
+              <Link
+                href="/dashboard"
+                className="text-gray-700 hover:text-blue-600 font-medium"
               >
-                <button className="flex items-center text-gray-700 hover:text-blue-600 font-medium py-2">
-                  {item.label}
-                  {item.children?.length > 0 && (
-                    <svg
-                      className="ml-1 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  )}
-                </button>
-
-                {item.children?.length > 0 && activeDropdown === item.id && (
-                  <div className="absolute left-0 mt-0 w-48 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.id}
-                        href={child.route !== "-" ? child.route : "#"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                Dashboard
+              </Link>
+            )}
 
             {/* ৩. User Section */}
             <div className="flex items-center space-x-4 border-l pl-6 ml-4">

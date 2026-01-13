@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Mail, Lock, User, ArrowRight, Check } from "lucide-react";
 
 export default function RegisterForm({ onSubmit, serverError, loading }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -12,96 +13,252 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
     formState: { errors },
   } = useForm();
 
+  const password = watch("password");
+
+  const getPasswordStrength = (password) => {
+    if (!password) return { strength: 0, label: "", color: "" };
+    
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+    const labels = ["Very Weak", "Weak", "Fair", "Good", "Strong"];
+    const colors = ["bg-red-500", "bg-orange-500", "bg-yellow-500", "bg-blue-500", "bg-green-500"];
+    
+    return {
+      strength,
+      label: labels[strength - 1] || "",
+      color: colors[strength - 1] || "bg-gray-300"
+    };
+  };
+
+  const passwordStrength = getPasswordStrength(password);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {serverError && (
-        <div className="p-3 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm">
-          {serverError}
+        <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-xl flex items-center gap-3 animate-in slide-in-from-top-2 duration-300">
+          <div className="w-2 h-2 bg-destructive rounded-full flex-shrink-0"></div>
+          <span className="text-sm font-medium">{serverError}</span>
         </div>
       )}
 
+      {/* Name Fields */}
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm font-semibold text-gray-700">
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-foreground block">
             First Name
           </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+              <User size={18} />
+            </div>
+            <input
+              {...register("first_name", { 
+                required: "First name is required",
+                minLength: { value: 2, message: "Too short" }
+              })}
+              placeholder="John"
+              className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+                errors.first_name 
+                  ? "border-destructive focus:border-destructive" 
+                  : "border-border focus:border-accent"
+              }`}
+            />
+          </div>
+          {errors.first_name && (
+            <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+              <div className="w-1 h-1 bg-destructive rounded-full"></div>
+              {errors.first_name.message}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-foreground block">
+            Last Name
+          </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+              <User size={18} />
+            </div>
+            <input
+              {...register("last_name", { 
+                required: "Last name is required",
+                minLength: { value: 2, message: "Too short" }
+              })}
+              placeholder="Doe"
+              className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+                errors.last_name 
+                  ? "border-destructive focus:border-destructive" 
+                  : "border-border focus:border-accent"
+              }`}
+            />
+          </div>
+          {errors.last_name && (
+            <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+              <div className="w-1 h-1 bg-destructive rounded-full"></div>
+              {errors.last_name.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Email Field */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-foreground block">
+          Email Address
+        </label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+            <Mail size={18} />
+          </div>
           <input
-            {...register("first_name", { required: "Required" })}
-            className={`w-full mt-1 p-2 border rounded-lg outline-none focus:ring-2 ${
-              errors.first_name ? "border-red-500" : "focus:ring-blue-500"
+            type="email"
+            {...register("email", { 
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address"
+              }
+            })}
+            placeholder="john@example.com"
+            className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+              errors.email 
+                ? "border-destructive focus:border-destructive" 
+                : "border-border focus:border-accent"
             }`}
           />
         </div>
-        <div>
-          <label className="text-sm font-semibold text-gray-700">
-            Last Name
-          </label>
-          <input
-            {...register("last_name", { required: "Required" })}
-            className="w-full mt-1 p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="text-sm font-semibold text-gray-700">
-          Email Address
-        </label>
-        <input
-          type="email"
-          {...register("email", { required: "Email is required" })}
-          className="w-full mt-1 p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <div className="relative">
-        <label className="text-sm font-semibold text-gray-700">Password</label>
-        <input
-          type={showPassword ? "text" : "password"}
-          {...register("password", {
-            required: "Password required",
-            minLength: { value: 6, message: "Minimum 6 characters" },
-          })}
-          className="w-full mt-1 p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-9 text-gray-500"
-        >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-        </button>
-        {errors.password && (
-          <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-        )}
-      </div>
-
-      <div>
-        <label className="text-sm font-semibold text-gray-700">
-          Confirm Password
-        </label>
-        <input
-          type="password"
-          {...register("confirmPassword", {
-            validate: (value) =>
-              value === watch("password") || "Passwords do not match",
-          })}
-          className="w-full mt-1 p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {errors.confirmPassword && (
-          <p className="text-red-500 text-xs mt-1">
-            {errors.confirmPassword.message}
+        {errors.email && (
+          <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            {errors.email.message}
           </p>
         )}
       </div>
 
+      {/* Password Field */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-foreground block">
+          Password
+        </label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+            <Lock size={18} />
+          </div>
+          <input
+            type={showPassword ? "text" : "password"}
+            {...register("password", {
+              required: "Password is required",
+              minLength: { value: 6, message: "Password must be at least 6 characters" },
+            })}
+            placeholder="Create a strong password"
+            className={`w-full pl-12 pr-12 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+              errors.password 
+                ? "border-destructive focus:border-destructive" 
+                : "border-border focus:border-accent"
+            }`}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        
+        {/* Password Strength Indicator */}
+        {password && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                <div 
+                  className={`h-full transition-all duration-300 ${passwordStrength.color}`}
+                  style={{ width: `${(passwordStrength.strength / 5) * 100}%` }}
+                ></div>
+              </div>
+              <span className="text-xs font-medium text-muted-foreground">
+                {passwordStrength.label}
+              </span>
+            </div>
+          </div>
+        )}
+        
+        {errors.password && (
+          <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            {errors.password.message}
+          </p>
+        )}
+      </div>
+
+      {/* Confirm Password Field */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-foreground block">
+          Confirm Password
+        </label>
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
+            <Lock size={18} />
+          </div>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "Passwords do not match",
+            })}
+            placeholder="Confirm your password"
+            className={`w-full pl-12 pr-12 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
+              errors.confirmPassword 
+                ? "border-destructive focus:border-destructive" 
+                : "border-border focus:border-accent"
+            }`}
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        {errors.confirmPassword && (
+          <p className="text-destructive text-xs mt-1 flex items-center gap-1">
+            <div className="w-1 h-1 bg-destructive rounded-full"></div>
+            {errors.confirmPassword.message}
+          </p>
+        )}
+        {!errors.confirmPassword && watch("confirmPassword") && watch("confirmPassword") === password && (
+          <p className="text-green-600 text-xs mt-1 flex items-center gap-1">
+            <Check size={12} />
+            Passwords match
+          </p>
+        )}
+      </div>
+
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2"
+        className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group"
       >
-        {loading && <Loader2 className="animate-spin" size={20} />}
-        {loading ? "Creating Account..." : "Create Account"}
+        {loading ? (
+          <>
+            <Loader2 className="animate-spin" size={20} />
+            Creating Account...
+          </>
+        ) : (
+          <>
+            Create Account
+            <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
+          </>
+        )}
       </button>
     </form>
   );
