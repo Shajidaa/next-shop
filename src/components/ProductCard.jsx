@@ -24,53 +24,15 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
                 <Heart className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex-1 p-6 flex flex-col">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <span className="text-xs text-accent font-semibold uppercase tracking-wide">
-                    {product.category?.categoryName || "Product"}
-                  </span>
-                  <h3 className="font-bold text-xl text-foreground mt-1 mb-2">
-                    {product.productName}
-                  </h3>
-                </div>
-                <div className="text-right">
-                  <span className="text-2xl font-bold text-accent">
-                    ${Number(product.finalPrice || 0).toFixed(2)}
-                  </span>
-                </div>
+           
               </div>
               
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(Number(product.rating) || 4)
-                          ? "text-yellow-400 fill-current"
-                          : "text-muted-foreground"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  ({(Number(product.rating) || 4).toFixed(1)})
-                </span>
-              </div>
+             
 
-              <div className="flex items-center gap-3 mt-auto">
-                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground rounded-xl transition-all duration-200 font-semibold">
-                  <ShoppingCart className="w-4 h-4" />
-                  Add to Cart
-                </button>
-                <button className="px-4 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-xl transition-all duration-200 font-semibold">
-                  View Details
-                </button>
-              </div>
+           
             </div>
-          </div>
-        </div>
+       
+       
       </Link>
     );
   }
@@ -106,32 +68,13 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
             {product.productName}
           </h3>
           
-          <div className="flex items-center gap-1 mb-4">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-4 h-4 ${
-                    i < Math.floor(Number(product.rating) || 4)
-                      ? "text-yellow-400 fill-current"
-                      : "text-muted-foreground"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-muted-foreground ml-1">
-              ({(Number(product.rating) || 4).toFixed(1)})
-            </span>
-          </div>
+        
           
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
             <span className="text-xl font-bold text-accent">
               ${Number(product.finalPrice || 0).toFixed(2)}
             </span>
-            <button className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-sm font-semibold transition-colors">
-              <ShoppingCart className="w-4 h-4" />
-              Add to Cart
-            </button>
+            
           </div>
         </div>
       </div>
