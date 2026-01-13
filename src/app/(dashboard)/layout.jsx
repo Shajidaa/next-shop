@@ -129,24 +129,7 @@ export default function DashboardLayout({ children }) {
               </Link>
             </div>
 
-            {/* Brands Management */}
-            <div>
-              <Link
-                href="/brands"
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${
-                  pathname.startsWith("/dashboard/brands")
-                    ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-              >
-                <Building2 className="w-5 h-5" />
-                <span className="font-medium">Brands</span>
-                {pathname.startsWith("/dashboard/brands") && (
-                  <ChevronRight className="w-4 h-4 ml-auto" />
-                )}
-              </Link>
-            </div>
+            
 
           
           </nav>

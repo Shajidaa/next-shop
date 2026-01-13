@@ -1,7 +1,19 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Loader2, Mail, Lock, User, ArrowRight, Check, Phone, MapPin, Building2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Mail,
+  Lock,
+  User,
+  ArrowRight,
+  Check,
+  Phone,
+  MapPin,
+  Building2,
+} from "lucide-react";
 
 export default function RegisterForm({ onSubmit, serverError, loading }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +29,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
 
   const getPasswordStrength = (password) => {
     if (!password) return { strength: 0, label: "", color: "" };
-    
+
     let strength = 0;
     if (password.length >= 8) strength++;
     if (/[A-Z]/.test(password)) strength++;
@@ -26,12 +38,18 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
     if (/[^A-Za-z0-9]/.test(password)) strength++;
 
     const labels = ["Very Weak", "Weak", "Fair", "Good", "Strong"];
-    const colors = ["bg-red-500", "bg-orange-500", "bg-yellow-500", "bg-blue-500", "bg-green-500"];
-    
+    const colors = [
+      "bg-red-500",
+      "bg-orange-500",
+      "bg-yellow-500",
+      "bg-blue-500",
+      "bg-green-500",
+    ];
+
     return {
       strength,
       label: labels[strength - 1] || "",
-      color: colors[strength - 1] || "bg-gray-300"
+      color: colors[strength - 1] || "bg-gray-300",
     };
   };
 
@@ -41,7 +59,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {serverError && (
         <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-xl flex items-center gap-3 animate-in slide-in-from-top-2 duration-300">
-          <div className="w-2 h-2 bg-destructive rounded-full flex-shrink-0"></div>
+          <div className="w-2 h-2 bg-destructive rounded-full shrink-0"></div>
           <span className="text-sm font-medium">{serverError}</span>
         </div>
       )}
@@ -57,14 +75,14 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
               <User size={18} />
             </div>
             <input
-              {...register("name", { 
+              {...register("name", {
                 required: "First name is required",
-                minLength: { value: 2, message: "Too short" }
+                minLength: { value: 2, message: "Too short" },
               })}
               placeholder="John"
               className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-                errors.name 
-                  ? "border-destructive focus:border-destructive" 
+                errors.name
+                  ? "border-destructive focus:border-destructive"
                   : "border-border focus:border-accent"
               }`}
             />
@@ -72,12 +90,10 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
           {errors.name && (
             <p className="text-destructive text-xs mt-1 flex items-center gap-1">
               <span className="w-1 h-1 bg-destructive rounded-full"></span>
-              {errors.first_name.message}
+              {errors.name.message}
             </p>
           )}
         </div>
-
-      
       </div>
 
       {/* Email Field */}
@@ -91,17 +107,17 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
           </div>
           <input
             type="email"
-            {...register("email", { 
+            {...register("email", {
               required: "Email is required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
+                message: "Invalid email address",
+              },
             })}
             placeholder="john@example.com"
             className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-              errors.email 
-                ? "border-destructive focus:border-destructive" 
+              errors.email
+                ? "border-destructive focus:border-destructive"
                 : "border-border focus:border-accent"
             }`}
           />
@@ -129,7 +145,9 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
               {...register("phone", { required: "Phone number is required" })}
               placeholder="+1 (555) 000-0000"
               className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-                errors.phone ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+                errors.phone
+                  ? "border-destructive focus:border-destructive"
+                  : "border-border focus:border-accent"
               }`}
             />
           </div>
@@ -153,7 +171,9 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
               {...register("company", { required: "Company name is required" })}
               placeholder="Acme Inc."
               className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-                errors.company ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+                errors.company
+                  ? "border-destructive focus:border-destructive"
+                  : "border-border focus:border-accent"
               }`}
             />
           </div>
@@ -179,7 +199,9 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             {...register("address", { required: "Address is required" })}
             placeholder="123 Main St, City, Country"
             className={`w-full pl-12 pr-4 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-              errors.address ? "border-destructive focus:border-destructive" : "border-border focus:border-accent"
+              errors.address
+                ? "border-destructive focus:border-destructive"
+                : "border-border focus:border-accent"
             }`}
           />
         </div>
@@ -204,12 +226,15 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             type={showPassword ? "text" : "password"}
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Password must be at least 6 characters" },
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
             })}
             placeholder="Create a strong password"
             className={`w-full pl-12 pr-12 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-              errors.password 
-                ? "border-destructive focus:border-destructive" 
+              errors.password
+                ? "border-destructive focus:border-destructive"
                 : "border-border focus:border-accent"
             }`}
           />
@@ -221,12 +246,12 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
-        
+
         {password && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                <div 
+                <div
                   className={`h-full transition-all duration-300 ${passwordStrength.color}`}
                   style={{ width: `${(passwordStrength.strength / 5) * 100}%` }}
                 ></div>
@@ -237,7 +262,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             </div>
           </div>
         )}
-        
+
         {errors.password && (
           <p className="text-destructive text-xs mt-1 flex items-center gap-1">
             <span className="w-1 h-1 bg-destructive rounded-full"></span>
@@ -264,8 +289,8 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             })}
             placeholder="Confirm your password"
             className={`w-full pl-12 pr-12 py-3 bg-input border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring placeholder:text-muted-foreground ${
-              errors.confirmPassword 
-                ? "border-destructive focus:border-destructive" 
+              errors.confirmPassword
+                ? "border-destructive focus:border-destructive"
                 : "border-border focus:border-accent"
             }`}
           />
@@ -283,12 +308,14 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
             {errors.confirmPassword.message}
           </p>
         )}
-        {!errors.confirmPassword && watch("confirmPassword") && watch("confirmPassword") === password && (
-          <p className="text-green-600 text-xs mt-1 flex items-center gap-1">
-            <Check size={12} />
-            Passwords match
-          </p>
-        )}
+        {!errors.confirmPassword &&
+          watch("confirmPassword") &&
+          watch("confirmPassword") === password && (
+            <p className="text-green-600 text-xs mt-1 flex items-center gap-1">
+              <Check size={12} />
+              Passwords match
+            </p>
+          )}
       </div>
 
       {/* Submit Button */}
@@ -305,7 +332,10 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
         ) : (
           <>
             Create Account
-            <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight
+              size={18}
+              className="group-hover:translate-x-0.5 transition-transform"
+            />
           </>
         )}
       </button>
