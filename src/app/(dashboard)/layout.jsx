@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <ThemeProvider>
-      <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="flex min-h-screen ">
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div 

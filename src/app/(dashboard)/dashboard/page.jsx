@@ -50,27 +50,8 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/90 to-accent rounded-2xl p-8 text-primary-foreground">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
-        <div className="relative">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-              <Users className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold">
-                Welcome back, {user?.name || user?.username || "User"}! 👋
-              </h1>
-              <p className="text-primary-foreground/80 text-lg">
-                Ready to manage your dashboard? You have access to{" "}
-                <span className="font-semibold">{user?.permissions?.length || 0} modules</span>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-8 ">
+   
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -53,15 +53,16 @@ const ProductCard = ({ product }) => {
      
           {/* Price Section */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-            <div className="flex flex-col">
-              {hasDiscount && (
-                <span className="text-xs text-muted-foreground line-through">
-                  ${Number(product.originalPrice).toFixed(2)}
-                </span>
-              )}
+            <div className="flex flex-row gap-2 ">
               <span className="text-xl font-bold text-primary">
                 ${Number(product.finalPrice || 0).toFixed(2)}
               </span>
+              {hasDiscount && (
+                <span className="text-xl text-muted-foreground line-through">
+                  ${Number(product.originalPrice).toFixed(2)}
+                </span>
+              )}
+              
             </div>
          
           </div>
