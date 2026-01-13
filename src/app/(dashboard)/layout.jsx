@@ -20,6 +20,7 @@ export default function DashboardLayout({ children }) {
   if (loading)
     return <div className="p-10 text-center">Loading Dashboard...</div>;
   if (!user) return null;
+console.log(user.permissions);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
