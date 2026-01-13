@@ -40,35 +40,35 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   }
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-2 sm:gap-3">
       <button
         onClick={() => onCategoryChange("")}
-        className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
+        className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base ${
           selectedCategory === ""
             ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
             : "bg-input hover:bg-muted border border-border text-foreground"
         }`}
       >
-        <Tag className="w-4 h-4" />
-        All Categories
+        <Tag className="w-3 h-3 sm:w-4 sm:h-4" />
+        <span className="whitespace-nowrap">All Categories</span>
       </button>
       
       {categories.map((category) => (
         <button
           key={category.categoryId}
           onClick={() => onCategoryChange(category.categoryId.toString())}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
+          className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base ${
             selectedCategory === category.categoryId.toString()
               ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
               : "bg-input hover:bg-muted border border-border text-foreground"
           }`}
         >
-          <div className={`w-2 h-2 rounded-full ${
+          <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
             selectedCategory === category.categoryId.toString()
               ? "bg-primary-foreground/60"
               : "bg-accent"
           }`} />
-          {category.categoryName}
+          <span className="whitespace-nowrap">{category.categoryName}</span>
         </button>
       ))}
     </div>

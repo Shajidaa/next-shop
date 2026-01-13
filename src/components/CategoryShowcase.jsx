@@ -164,17 +164,33 @@ export default function CategoryShowcase() {
               }
             }}
             breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 16,
+              },
+              480: {
+                slidesPerView: 1.5,
+                spaceBetween: 16,
+              },
               640: {
                 slidesPerView: 2,
+                spaceBetween: 20,
               },
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2.5,
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 4,
+                spaceBetween: 24,
               },
               1280: {
                 slidesPerView: 5,
+                spaceBetween: 24,
+              },
+              1536: {
+                slidesPerView: 6,
+                spaceBetween: 28,
               },
             }}
             className="!pb-16"
@@ -200,22 +216,13 @@ export default function CategoryShowcase() {
                         </div>
                         
                         {/* Category Info */}
-                        <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">
+                        <h3 className="text-xl line-clamp-1  font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">
                           {category.categoryName}
                         </h3>
                         
-                        {/* Description */}
-                        <p className="text-muted-foreground text-sm mb-6 line-clamp-2 leading-relaxed">
-                          {category.description || `Discover amazing ${category.categoryName.toLowerCase()} products curated just for you.`}
-                        </p>
+                       
                         
-                        {/* Action Button */}
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent hover:text-accent-foreground rounded-xl transition-all duration-300 group-hover:scale-105">
-                          <span className="text-sm font-semibold">
-                            Explore
-                          </span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
+                    
                       </div>
 
                       {/* Hover Effect Border */}
@@ -231,18 +238,18 @@ export default function CategoryShowcase() {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <button className="category-swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-card border border-border/50 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
-            <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <button className="category-swiper-button-prev absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-card border border-border/50 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
           </button>
           
-          <button className="category-swiper-button-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-card border border-border/50 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
-            <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <button className="category-swiper-button-next absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-card border border-border/50 rounded-full flex items-center justify-center text-muted-foreground hover:text-accent hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
           </button>
 
           {/* Progress Bar */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2">
-            <div className="flex items-center gap-3">
-              <div className="w-24 h-1 bg-muted rounded-full overflow-hidden">
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 z-20 bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-3 py-2 sm:px-4 sm:py-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-16 sm:w-24 h-1 bg-muted rounded-full overflow-hidden">
                 <div className="swiper-progress-bar h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300" style={{ width: `${(1 / Math.max(categories.length - 4, 1)) * 100}%` }}></div>
               </div>
               <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
