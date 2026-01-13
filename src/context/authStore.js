@@ -7,6 +7,12 @@ const useAuthStore = create(
     (set, get) => ({
       user: null,
       loading: false,
+      _hasHydrated: false,
+
+      // Set hydration status
+      setHasHydrated: (state) => {
+        set({ _hasHydrated: state });
+      },
 
       
       fetchProfile: async (token) => {
@@ -95,7 +101,10 @@ const useAuthStore = create(
       },
     }),
     {
-      name: 'auth-storage', 
+      name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );

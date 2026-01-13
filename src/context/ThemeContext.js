@@ -1,85 +1,57 @@
-"use client";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { createContext, useContext, useEffect, useState } from "react";
+const useThemeStore = create(
+  persist(
+    (set, get) => ({
+      theme: 'light', // ডিফল্ট থিম
+      _hasHydrated: false,
 
-const ThemeContext = createContext();
+      // Set hydration status
+      setHasHydrated: (state) => {
+        set({ _hasHydrated: state });
+      },
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("light");
-  const [mounted, setMounted] = useState(false);
+      // থিম টগল করার ফাংশন
+      toggleTheme: () => {
+        const newTheme = get().theme === 'light' ? 'dark' : 'light';
+        set({ theme: newTheme });
+        get().applyTheme(newTheme);
+      },
 
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    try {
-      const savedTheme = localStorage.getItem("theme");
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      const initialTheme = savedTheme || systemTheme;
-      
-      setTheme(initialTheme);
-    } catch (error) {
-      console.warn("Failed to load theme from localStorage:", error);
-      setTheme("light");
-    } finally {
-      setMounted(true);
-    }
-  }, []);
+      setLightTheme: () => {
+        set({ theme: 'light' });
+        get().applyTheme('light');
+      },
 
-  // Apply theme to document
-  useEffect(() => {
-    if (mounted) {
-      try {
-        const root = document.documentElement;
-        
-        if (theme === "dark") {
-          root.classList.add("dark");
-        } else {
-          root.classList.remove("dark");
+      setDarkTheme: () => {
+        set({ theme: 'dark' });
+        get().applyTheme('dark');
+      },
+
+      // HTML এর class পরিবর্তন করার ফাংশন
+      applyTheme: (theme) => {
+        if (typeof window !== 'undefined') {
+          const root = document.documentElement;
+          if (theme === 'dark') {
+            root.classList.add('dark');
+          } else {
+            root.classList.remove('dark');
+          }
         }
-        
-        localStorage.setItem("theme", theme);
-      } catch (error) {
-        console.warn("Failed to apply theme:", error);
-      }
+      },
+    }),
+    {
+      name: 'theme-storage', // localStorage কী
+      onRehydrateStorage: () => (state) => {
+        // Apply theme immediately after hydration
+        if (state) {
+          state.applyTheme(state.theme);
+          state.setHasHydrated(true);
+        }
+      },
     }
-  }, [theme, mounted]);
+  )
+);
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === "light" ? "dark" : "light");
-  };
-
-  const setLightTheme = () => setTheme("light");
-  const setDarkTheme = () => setTheme("dark");
-
-  const value = {
-    theme,
-    toggleTheme,
-    setLightTheme,
-    setDarkTheme,
-    isDark: theme === "dark",
-    isLight: theme === "light",
-    mounted
-  };
-
-  // Prevent hydration mismatch by rendering a placeholder during SSR
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={{ ...value, mounted: false }}>
-        <div suppressHydrationWarning>{children}</div>
-      </ThemeContext.Provider>
-    );
-  }
-
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
-
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-}
+export default useThemeStore;

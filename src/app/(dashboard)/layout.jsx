@@ -10,23 +10,31 @@ import {
   Menu, 
   X, 
   ChevronRight,
-  Building2
+
 } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import { ThemeProvider } from "@/context/ThemeContext";
+import useThemeStore from "@/context/ThemeContext";
 
 export default function DashboardLayout({ children }) {
-  const { user, loading, logout } = useAuthStore();
+  const { user, loading, logout, _hasHydrated } = useAuthStore();
+  const { theme, applyTheme, _hasHydrated: themeHydrated } = useThemeStore();
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Protect the route: If not loading and no user, redirect to login
+  // Apply theme when hydrated
   useEffect(() => {
-    if (!loading && !user) {
+    if (themeHydrated) {
+      applyTheme(theme);
+    }
+  }, [themeHydrated, theme, applyTheme]);
+
+  // Protect the route: If hydrated, not loading and no user, redirect to login
+  useEffect(() => {
+    if (_hasHydrated && !loading && !user) {
       router.push("/login");
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, _hasHydrated]);
 
   const handleLogout = async () => {
     try {
@@ -37,7 +45,7 @@ export default function DashboardLayout({ children }) {
     }
   };
 
-  if (loading) {
+  if (!_hasHydrated || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
         <div className="text-center">
@@ -54,7 +62,7 @@ export default function DashboardLayout({ children }) {
   console.log("User permissions:", user.permissions);
 
   return (
-    <ThemeProvider>
+    
       <div className="flex min-h-screen ">
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
@@ -95,14 +103,14 @@ export default function DashboardLayout({ children }) {
           <div className="p-4 border-b border-border/50">
             <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl">
               <div className="w-10 h-10 bg-gradient-to-r from-accent to-accent/80 rounded-full flex items-center justify-center text-white font-semibold">
-                {(user.name || user.username || user.email || "U").charAt(0).toUpperCase()}
+                {(user?.data?.name || user?.name || user?.username || user?.email || "U").charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-foreground text-sm truncate">
-                  {user.name || user.username}
+                  {user?.data?.name || user?.name || user?.username || "User"}
                 </p>
                 <p className="text-xs text-muted-foreground capitalize">
-                  {user.role || "Member"}
+                  {user?.role || "Member"}
                 </p>
               </div>
             </div>
@@ -162,7 +170,7 @@ export default function DashboardLayout({ children }) {
                   {pathname === "/dashboard" ? "Dashboard Overview" : "Dashboard"}
                 </h1>
                 <p className="text-xs text-muted-foreground">
-                  Welcome back, {user.name || user.username || "User"}
+                  Welcome back, {user?.data?.name || user?.name || user?.username || "User"}
                 </p>
               </div>
             </div>
@@ -181,6 +189,6 @@ export default function DashboardLayout({ children }) {
           </main>
         </div>
       </div>
-    </ThemeProvider>
+    
   );
 }

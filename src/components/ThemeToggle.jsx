@@ -1,52 +1,29 @@
 "use client";
+import useThemeStore from "@/context/ThemeContext";
+import { useEffect } from "react";
 
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "@/context/ThemeContext";
+export default function ThemeToggle() {
+  const { theme, toggleTheme, applyTheme, _hasHydrated } = useThemeStore();
 
-export function ThemeToggle({ className = "" }) {
-  const { theme, toggleTheme, isDark, mounted } = useTheme();
+  // Apply theme on mount (fallback)
+  useEffect(() => {
+    if (_hasHydrated) {
+      applyTheme(theme);
+    }
+  }, [_hasHydrated, theme, applyTheme]);
 
-  // Show a placeholder during SSR/hydration
-  if (!mounted) {
-    return (
-      <div className={`p-2 rounded-lg border border-border/50 bg-card ${className}`}>
-        <div className="w-5 h-5 opacity-50">
-          <Sun className="w-5 h-5 text-muted-foreground" />
-        </div>
-      </div>
-    );
+  // Don't render until hydrated to prevent flash
+  if (!_hasHydrated) {
+    return <div className="p-2 w-10 h-10" />; 
   }
 
   return (
     <button
       onClick={toggleTheme}
-      className={`relative p-2 rounded-lg border border-border/50 bg-card hover:bg-muted/50 transition-all duration-200 group ${className}`}
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+      className="p-2 rounded-lg bg-muted hover:bg-accent transition-colors"
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
-      <div className="relative w-5 h-5">
-        {/* Sun Icon */}
-        <Sun 
-          className={`absolute inset-0 w-5 h-5 text-accent transition-all duration-300 ${
-            isDark 
-              ? 'opacity-0 rotate-90 scale-0' 
-              : 'opacity-100 rotate-0 scale-100'
-          }`} 
-        />
-        
-        {/* Moon Icon */}
-        <Moon 
-          className={`absolute inset-0 w-5 h-5 text-accent transition-all duration-300 ${
-            isDark 
-              ? 'opacity-100 rotate-0 scale-100' 
-              : 'opacity-0 -rotate-90 scale-0'
-          }`} 
-        />
-      </div>
-      
-      {/* Hover effect */}
-      <div className="absolute inset-0 bg-accent/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+      {theme === "light" ? "☀️" : "🌙"}
     </button>
   );
 }
-
-export default ThemeToggle;
