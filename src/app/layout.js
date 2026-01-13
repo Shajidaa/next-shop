@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,17 +22,19 @@ function LayoutContent({ children }) {
   const isDashboard = pathname?.startsWith('/dashboard');
 
   return (
-    <AuthProvider>
-      {!isDashboard && <Navbar />}
-      {children}
-      {!isDashboard && <Footer />}
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        {!isDashboard && <Navbar />}
+        {children}
+        {!isDashboard && <Footer />}
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <title>Next Shop</title>
         <meta name="description" content="Premium e-commerce platform" />

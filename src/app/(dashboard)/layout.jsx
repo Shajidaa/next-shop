@@ -9,13 +9,10 @@ import {
   LogOut, 
   Menu, 
   X, 
-  User, 
-  Settings,
   ChevronRight,
-  Bell,
-  Search,
   Building2
 } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function DashboardLayout({ children }) {
   const { user, loading, logout } = useAuth();
@@ -185,7 +182,10 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
 
-         
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+          </div>
         </header>
 
         {/* Main Content */}

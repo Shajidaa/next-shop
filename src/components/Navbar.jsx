@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -106,6 +107,9 @@ export function Navbar() {
 
           {/* User Section */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {!loading &&
               (user ? (
                 <div className="flex items-center space-x-4">
@@ -153,7 +157,10 @@ export function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            {/* Theme Toggle for Mobile */}
+            <ThemeToggle />
+            
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-all duration-200"
