@@ -1,6 +1,6 @@
 // app/dashboard/page.jsx
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import  useAuthStore  from "@/context/authStore";
 import { 
   Users, 
   Activity, 
@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   const stats = [
     {

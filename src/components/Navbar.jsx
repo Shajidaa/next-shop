@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import  useAuthStore  from "@/context/authStore";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export function Navbar() {
@@ -11,7 +11,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { user, logout, loading } = useAuth();
+  const { user, logout, loading } = useAuthStore();
 
   // Handle scroll effect
   useEffect(() => {

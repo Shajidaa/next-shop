@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import  useAuthStore  from "@/context/authStore";
 import { UserPlus, ArrowRight } from "lucide-react";
 import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { register } = useAuth();
+  const { register: registerUser } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
 
@@ -16,13 +16,13 @@ export default function RegisterPage() {
     setLoading(true);
     setServerError("");
 
-    const result = await register(formData);
+    const result = await registerUser(formData);
+    setLoading(false); // Always set loading to false
 
     if (result.success) {
       router.push("/");
     } else {
       setServerError(result.error);
-      setLoading(false);
     }
   };
 

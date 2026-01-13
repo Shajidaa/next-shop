@@ -1,6 +1,6 @@
 // app/dashboard/layout.jsx
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import  useAuthStore  from "@/context/authStore";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function DashboardLayout({ children }) {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);

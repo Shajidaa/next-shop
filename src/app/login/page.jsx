@@ -2,12 +2,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import  useAuthStore  from "@/context/authStore";
 import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -23,24 +23,33 @@ export default function LoginPage() {
     setLoading(true);
 
     const result = await login(formData);
+    setLoading(false); // Always set loading to false
 
     if (result.success) {
       router.push("/");
       router.refresh();
     } else {
       setError(result.error);
-      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen  flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10"></div>
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       
-     
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl mb-4 shadow-lg">
+            <Lock className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
+          <p className="text-muted-foreground">Sign in to your account to continue</p>
+        </div>
+
         <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl shadow-xl p-8 relative">
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent rounded-2xl pointer-events-none"></div>
@@ -156,8 +165,18 @@ export default function LoginPage() {
           </div>
         </div>
 
-       
+        {/* Footer */}
+        <p className="text-center text-xs text-muted-foreground mt-8">
+          By signing in, you agree to our{" "}
+          <Link href="/terms" className="text-accent hover:underline">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="text-accent hover:underline">
+            Privacy Policy
+          </Link>
+        </p>
       </div>
-   
+    </div>
   );
 }
