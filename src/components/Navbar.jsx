@@ -116,7 +116,7 @@ export function Navbar() {
                     </div>
                     <div className="text-right">
                       <p className="font-semibold text-foreground text-sm">
-                        {user.data?.name || user.username || "Admin"}
+                        {user.data?.name || user.username }
                       </p>
                       <p className="text-muted-foreground text-xs">
                         {user.data?.email || user.email}
