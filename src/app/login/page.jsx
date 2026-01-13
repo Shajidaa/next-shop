@@ -34,7 +34,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen  flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10"></div>
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl -z-10"></div>

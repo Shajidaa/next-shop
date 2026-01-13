@@ -10,26 +10,36 @@ export function ThemeProvider({ children }) {
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = savedTheme || systemTheme;
-    
-    setTheme(initialTheme);
-    setMounted(true);
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      const initialTheme = savedTheme || systemTheme;
+      
+      setTheme(initialTheme);
+    } catch (error) {
+      console.warn("Failed to load theme from localStorage:", error);
+      setTheme("light");
+    } finally {
+      setMounted(true);
+    }
   }, []);
 
   // Apply theme to document
   useEffect(() => {
     if (mounted) {
-      const root = document.documentElement;
-      
-      if (theme === "dark") {
-        root.classList.add("dark");
-      } else {
-        root.classList.remove("dark");
+      try {
+        const root = document.documentElement;
+        
+        if (theme === "dark") {
+          root.classList.add("dark");
+        } else {
+          root.classList.remove("dark");
+        }
+        
+        localStorage.setItem("theme", theme);
+      } catch (error) {
+        console.warn("Failed to apply theme:", error);
       }
-      
-      localStorage.setItem("theme", theme);
     }
   }, [theme, mounted]);
 
@@ -46,12 +56,17 @@ export function ThemeProvider({ children }) {
     setLightTheme,
     setDarkTheme,
     isDark: theme === "dark",
-    isLight: theme === "light"
+    isLight: theme === "light",
+    mounted
   };
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch by rendering a placeholder during SSR
   if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>;
+    return (
+      <ThemeContext.Provider value={{ ...value, mounted: false }}>
+        <div suppressHydrationWarning>{children}</div>
+      </ThemeContext.Provider>
+    );
   }
 
   return (

@@ -11,9 +11,14 @@ import {
   Sparkles
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  
+  // Hide newsletter section on auth pages
+  const isAuthPage = pathname === "/login" || pathname === "/register";
 
   const quickLinks = [
     { name: "Home", href: "/" },
@@ -51,13 +56,14 @@ export default function Footer() {
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section */}
-        <div className="py-12 border-b border-border/50">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-sm mb-4">
-              <Sparkles className="w-4 h-4" />
-              Stay Updated
-            </div>
+        {/* Newsletter Section - Hidden on auth pages */}
+        {!isAuthPage && (
+          <div className="py-12 border-b border-border/50">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-sm mb-4">
+                <Sparkles className="w-4 h-4" />
+                Stay Updated
+              </div>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               Get the Latest Updates
             </h3>
@@ -80,6 +86,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Main Footer Content */}
         <div className="py-12">

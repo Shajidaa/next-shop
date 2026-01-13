@@ -4,7 +4,18 @@ import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
 export function ThemeToggle({ className = "" }) {
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { theme, toggleTheme, isDark, mounted } = useTheme();
+
+  // Show a placeholder during SSR/hydration
+  if (!mounted) {
+    return (
+      <div className={`p-2 rounded-lg border border-border/50 bg-card ${className}`}>
+        <div className="w-5 h-5 opacity-50">
+          <Sun className="w-5 h-5 text-muted-foreground" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <button

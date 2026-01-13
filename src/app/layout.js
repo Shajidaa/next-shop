@@ -22,13 +22,11 @@ function LayoutContent({ children }) {
   const isDashboard = pathname?.startsWith('/dashboard');
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        {!isDashboard && <Navbar />}
-        {children}
-        {!isDashboard && <Footer />}
-      </AuthProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      {!isDashboard && <Navbar />}
+      {children}
+      {!isDashboard && <Footer />}
+    </AuthProvider>
   );
 }
 
@@ -41,8 +39,11 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <LayoutContent>{children}</LayoutContent>
+        <ThemeProvider>
+          <LayoutContent>{children}</LayoutContent>
+        </ThemeProvider>
       </body>
     </html>
   );
