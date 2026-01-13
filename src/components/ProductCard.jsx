@@ -1,61 +1,43 @@
+import { Heart, Star } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const ProductCard = ({ product }) => {
   return (
-    <Link
-      key={product.productId}
-      href={`/products/${product.productId}`}
-      className="group"
-    >
-      <div className="bg-white rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
-        <div className="bg-gray-100 h-48 flex items-center justify-center relative overflow-hidden">
-          {/* {product.thumbnail ? (
-            <img
-              src={product.thumbnail || "/placeholder.svg"}
-              alt={product.productName}
-              width={200}
-              height={200}
-              className="object-cover group-hover:scale-105 transition-transform"
-            />
-          ) : (
-            <div className="text-gray-400">No image</div>
-          )} */}
-          {!product.inStock && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-              <span className="text-white font-semibold">Out of Stock</span>
-            </div>
-          )}
+    <Link key={product.id} href={`/products/${product.productId}`}>
+      <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
+        <div className="bg-muted aspect-square flex items-center justify-center relative overflow-hidden">
+          {/* <img
+            src={
+              product.image ||
+              `/luxury-product-.jpg?height=300&width=300&query=${product.name}`
+            }
+            alt={product.name}
+            className="w-full h-full object-cover hover:scale-105 transition-transform"
+          /> */}
+          <button className="absolute top-3 right-3 bg-background rounded-full p-2 hover:bg-primary hover:text-primary-foreground transition-colors">
+            <Heart className="w-5 h-5" />
+          </button>
         </div>
-        <div className="p-4">
-          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+        <div className="p-4 flex-1 flex flex-col">
+          <span className="text-xs text-accent font-semibold uppercase mb-2">
+            {product.category.categoryName || "Product"}
+          </span>
+          <h3 className="font-semibold text-lg mb-2 line-clamp-2">
             {product.productName}
           </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            {product.brand?.brandName || "No brand"}
-          </p>
-          <div className="flex items-center justify-between mt-4">
-            <div>
-              <p className="text-lg font-bold text-gray-900">
-                ${product.finalPrice?.toFixed(2) || "0.00"}
-              </p>
-              {product.originalPrice > product.finalPrice && (
-                <p className="text-sm text-gray-500 line-through">
-                  ${product.originalPrice?.toFixed(2) || "0.00"}
-                </p>
-              )}
-            </div>
-            {product.discount?.enabled && (
-              <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                Sale
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2 mt-3">
-            <span className="text-yellow-500">★</span>
-            <span className="text-sm text-gray-600">
-              {product.rating || "0.0"}
+          <div className="flex items-center gap-1 mb-3">
+            <span className="text-sm text-foreground/70">
+              {(Number(product.rating) || 4).toFixed(1)}
             </span>
+          </div>
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border">
+            <span className="text-xl font-bold text-accent">
+              ${Number(product.finalPrice || 0).toFixed(2)}
+            </span>
+            <button className="px-3 py-1 bg-primary hover:bg-primary/90 text-primary-foreground rounded text-sm transition-colors">
+              Add to cart
+            </button>
           </div>
         </div>
       </div>

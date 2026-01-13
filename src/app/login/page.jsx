@@ -67,10 +67,6 @@ export default function LoginPage() {
         return;
       }
 
-      // Login successful - store token and redirect
-
-      console.log("[v0] Login successful:", data);
-
       if (data.token) {
         localStorage.setItem("authToken", data.token);
       }
@@ -82,8 +78,6 @@ export default function LoginPage() {
       router.push("/");
     } catch (err) {
       setError("An error occurred during login");
-
-      console.error("[v0] Login error:", err);
     } finally {
       setLoading(false);
     }
