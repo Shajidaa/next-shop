@@ -8,62 +8,70 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Helper to get profile data
   const fetchProfile = async (token) => {
     try {
       const res = await fetch("/api/auth/me", {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const profileData = await res.json();
-      return profileData;
+      return profileData?.data || profileData;
     } catch (err) {
-      console.error("Profile fetch error:", err);
       return null;
     }
+  };
+
+  // Centralized function to handle setting user and storage
+  const handleAuthSuccess = async (token, permissions) => {
+    const profile = await fetchProfile(token);
+    const fullUser = {
+      ...(profile || {}),
+      permissions: permissions || [],
+      token,
+    };
+    setUser(fullUser);
+    localStorage.setItem("user", JSON.stringify(fullUser));
+    return fullUser;
   };
 
   const login = async (credentials) => {
     try {
       const res = await axios.post("/api/auth/login", credentials);
-      const { token, permissions } = res.data.data;
-
-      const profile = await fetchProfile(token);
-
-      const fullUser = {
-        ...profile,
-        permissions,
-        token,
-      };
-
-      setUser(fullUser);
-      localStorage.setItem("user", JSON.stringify(fullUser));
+      const data = res.data?.data || res.data;
+      await handleAuthSuccess(data.token, data.permissions);
       return { success: true };
     } catch (error) {
-      return { success: false, error: error.response?.data?.message };
+      return {
+        success: false,
+        error: error.response?.data?.message || "Login failed",
+      };
     }
   };
-  const logout = async () => {
+
+  const register = async (formData) => {
     try {
-      if (user?.token) {
-        await axios.post(
-          "/api/auth/logout",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
+      const res = await axios.post("/api/auth/register", formData);
+      const data = res.data?.data || res.data;
+
+      if (data.token) {
+        await handleAuthSuccess(data.token, data.permissions);
       }
+      return { success: true };
     } catch (error) {
-      console.error("Server-side logout failed:", error);
-    } finally {
-      setUser(null);
-      localStorage.removeItem("user");
+      return {
+        success: false,
+        error: error.response?.data?.error || "Registration failed",
+      };
     }
   };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
@@ -73,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

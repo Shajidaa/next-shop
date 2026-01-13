@@ -3,26 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+// import { useAuth } from "@/app/context/AuthContext";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const router = useRouter();
+  const { user, logout, loading } = useAuth();
 
   const handleLogout = async () => {
     try {
       await logout();
-      router.push("/login");
+      setIsMenuOpen(false);
+      router.push("/");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  console.log(user);
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200">
+    <nav className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -33,50 +35,111 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <Link
-                href="/"
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/products"
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Products
-              </Link>
+          <div className="hidden md:flex items-center space-x-6">
+            {/* ১. Public Links (সবাই দেখতে পাবে) */}
+            <Link
+              href="/"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
+              Home
+            </Link>
+            <Link
+              href="/products"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
+              Products
+            </Link>
 
-              <div className="flex items-center space-x-2">
-                <Link
-                  href="/login"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Register
-                </Link>
+            {/* ২. Private Dynamic Menu (শুধুমাত্র লগইন করলে আসবে) */}
+            {user?.permissions?.map((item) => (
+              <div
+                key={item.id}
+                className="relative group"
+                onMouseEnter={() => setActiveDropdown(item.id)}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <button className="flex items-center text-gray-700 hover:text-blue-600 font-medium py-2">
+                  {item.label}
+                  {item.children?.length > 0 && (
+                    <svg
+                      className="ml-1 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  )}
+                </button>
+
+                {item.children?.length > 0 && activeDropdown === item.id && (
+                  <div className="absolute left-0 mt-0 w-48 bg-white border border-gray-100 shadow-xl rounded-md py-2 z-50">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.id}
+                        href={child.route !== "-" ? child.route : "#"}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
+            ))}
+
+            {/* ৩. User Section */}
+            <div className="flex items-center space-x-4 border-l pl-6 ml-4">
+              {!loading &&
+                (user ? (
+                  <div className="flex items-center space-x-4">
+                    <div className="text-right text-xs">
+                      <p className="font-bold text-gray-900">
+                        {user.data?.name || user.username || "Admin"}
+                      </p>
+                      <p className="text-gray-500">
+                        {user.data?.email || user.email}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="text-red-600 hover:bg-red-50 font-medium text-sm border border-red-100 px-3 py-1.5 rounded-lg transition-all"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-x-2">
+                    <Link
+                      href="/login"
+                      className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+                    >
+                      Register
+                    </Link>
+                  </div>
+                ))}
             </div>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
-              onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-              aria-expanded="false"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-gray-600"
             >
-              <span className="sr-only">Open main menu</span>
-              {/* Hamburger icon */}
               <svg
-                className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -85,22 +148,11 @@ export function Navbar() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              {/* Close icon */}
-              <svg
-                className={`${isMenuOpen ? "block" : "hidden"} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
+                  d={
+                    isMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16M4 18h16"
+                  }
                 />
               </svg>
             </button>
@@ -108,42 +160,69 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 border-t border-gray-200">
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-gray-50 border-t border-gray-200 p-4 space-y-4">
+          {/* Public Mobile Links */}
           <Link
             href="/"
-            className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-            onClick={() => setIsMenuOpen(false)}
+            className="block px-4 py-2 text-gray-700 font-bold bg-white rounded-md shadow-sm"
           >
             Home
           </Link>
           <Link
             href="/products"
-            className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-            onClick={() => setIsMenuOpen(false)}
+            className="block px-4 py-2 text-gray-700 font-bold bg-white rounded-md shadow-sm"
           >
             Products
           </Link>
 
-          <div className="border-t border-gray-200 pt-4 pb-3 space-y-1">
-            <Link
-              href="/login"
-              className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="bg-blue-600 hover:bg-blue-700 text-white block px-3 py-2 rounded-md text-base font-medium transition-colors mx-3"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Register
-            </Link>
+          {/* Private Mobile Permissions */}
+          {user?.permissions?.map((item) => (
+            <div key={item.id} className="space-y-2">
+              <p className="font-bold text-gray-400 text-xs uppercase px-2 mt-4">
+                {item.label}
+              </p>
+              {item.children?.map((child) => (
+                <Link
+                  key={child.id}
+                  href={child.route}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-4 py-2 text-gray-700 bg-white rounded-md shadow-sm text-sm"
+                >
+                  {child.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+
+          <div className="pt-4 border-t border-gray-200">
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="w-full bg-red-600 text-white py-2 rounded-md"
+              >
+                Logout
+              </button>
+            ) : (
+              <div className="space-y-2">
+                <Link
+                  href="/login"
+                  className="block text-center bg-gray-200 text-gray-700 py-2 rounded-md font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="block text-center bg-blue-600 text-white py-2 rounded-md font-medium"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 }

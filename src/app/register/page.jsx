@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { register } = useAuth(); // Get register from context
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
 
@@ -14,18 +15,14 @@ export default function RegisterPage() {
     setLoading(true);
     setServerError("");
 
-    try {
-      // Axios call
-      const response = await axios.post("/api/auth/register", formData);
+    // Use the context register function
+    const result = await register(formData);
 
-      if (response.status === 200 || response.status === 201) {
-        router.push("/");
-      }
-    } catch (err) {
-      setServerError(
-        err.response?.data?.error || "Something went wrong. Try again."
-      );
-    } finally {
+    if (result.success) {
+      // User is now set in Context! Redirect to home.
+      router.push("/");
+    } else {
+      setServerError(result.error);
       setLoading(false);
     }
   };
@@ -37,7 +34,6 @@ export default function RegisterPage() {
           <h2 className="text-3xl font-extrabold text-gray-900">
             Create Account
           </h2>
-          <p className="text-gray-500 mt-2">Join us and start your journey</p>
         </div>
 
         <RegisterForm
@@ -48,10 +44,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-gray-600 mt-8">
           Already have an account?{" "}
-          <Link
-            href="/auth/login"
-            className="text-blue-600 hover:underline font-semibold"
-          >
+          <Link href="/login" className="text-blue-600 font-semibold">
             Sign In
           </Link>
         </p>
