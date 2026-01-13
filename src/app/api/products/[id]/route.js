@@ -4,11 +4,10 @@ export async function GET(request, { params }) {
     const tenantValue = process.env.NEXT_PUBLIC_TENANT_HEADER;
     const { id } = await params;
 
-    const response = await fetch(`${baseUrl}/client/v1/productDetails/${id}`, {
+    const response = await fetch(`${baseUrl}/client/v1/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-
         "x-tenant-id": tenantValue,
       },
       cache: "no-store",
