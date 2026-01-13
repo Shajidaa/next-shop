@@ -109,7 +109,7 @@ console.log("products details",product);
   const isInStock = product.inStock && product.availability !== "out of stock" && product.stockQuantity > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen ">
       {/* Breadcrumb */}
       <div className="bg-card/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4">

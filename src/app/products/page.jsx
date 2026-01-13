@@ -3,7 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { 
   Search, 
   Filter, 
@@ -19,6 +19,7 @@ import CategoryFilter from "@/components/category";
 import ProductCard from "@/components/ProductCard";
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,6 +29,15 @@ export default function ProductsPage() {
   const [viewMode, setViewMode] = useState("grid");
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+
+  // Initialize category from URL params
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get('category');
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+      setShowFilters(true); // Show filters when coming from category link
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchProducts = async () => {

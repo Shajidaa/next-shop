@@ -2,29 +2,19 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { 
   ArrowRight, 
-  Star, 
   Shield, 
   Truck, 
   RefreshCw, 
-  Award,
-  TrendingUp,
-  Users,
-  ShoppingBag
+  Award
 } from "lucide-react";
 import FeaturedProducts from "@/components/FeaturedProducts/FeaturedProducts";
 import HeroSection from "@/components/HeroSection";
+import CategoryShowcase from "@/components/CategoryShowcase";
 
 export default function Home() {
-  const [stats, setStats] = useState({
-    products: 500,
-    customers: 10000,
-    orders: 25000
-  });
-
   const features = [
     {
       icon: Shield,
@@ -57,8 +47,8 @@ export default function Home() {
       {/* Hero Section */}
       <HeroSection />
 
-
-    
+      {/* Category Showcase Section */}
+      <CategoryShowcase />
 
       {/* Featured Products Section */}
       <section className="py-20 bg-muted/20">
