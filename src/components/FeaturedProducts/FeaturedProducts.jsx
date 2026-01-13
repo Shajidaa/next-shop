@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
+import { Loader2 } from "lucide-react";
 
 const FeaturedProducts = () => {
   const [featured, setFeaturedProducts] = useState([]);
@@ -22,12 +23,31 @@ const FeaturedProducts = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-gray-600">Loading ...</div>;
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-accent mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading featured products...</p>
+        </div>
+      </div>
+    );
   }
+
+  if (!featured || featured.length === 0) {
+    return (
+      <div className="text-center py-20">
+        <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">📦</span>
+        </div>
+        <p className="text-muted-foreground">No featured products available at the moment.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {featured.map((product) => (
-        <ProductCard key={product.productId} product={product}></ProductCard>
+        <ProductCard key={product.productId} product={product} />
       ))}
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Loader2, Tag } from "lucide-react";
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   const [categories, setCategories] = useState([]);
@@ -20,34 +21,53 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
     };
     fetchCategories();
   }, []);
-  console.log(categories);
 
   if (loading) {
-    return <div className="text-gray-600">Loading categories...</div>;
+    return (
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <Loader2 className="w-4 h-4 animate-spin" />
+        <span className="text-sm">Loading categories...</span>
+      </div>
+    );
+  }
+
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="text-center py-4">
+        <p className="text-muted-foreground text-sm">No categories available</p>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-wrap gap-3">
       <button
         onClick={() => onCategoryChange("")}
-        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+        className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
           selectedCategory === ""
-            ? "bg-blue-600 text-white"
-            : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+            : "bg-input hover:bg-muted border border-border text-foreground"
         }`}
       >
+        <Tag className="w-4 h-4" />
         All Categories
       </button>
+      
       {categories.map((category) => (
         <button
           key={category.categoryId}
           onClick={() => onCategoryChange(category.categoryId.toString())}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
             selectedCategory === category.categoryId.toString()
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-black hover:bg-gray-300"
+              ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg"
+              : "bg-input hover:bg-muted border border-border text-foreground"
           }`}
         >
+          <div className={`w-2 h-2 rounded-full ${
+            selectedCategory === category.categoryId.toString()
+              ? "bg-primary-foreground/60"
+              : "bg-accent"
+          }`} />
           {category.categoryName}
         </button>
       ))}
