@@ -156,17 +156,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Footer */}
-        <p className="text-center text-xs text-muted-foreground mt-8">
-          By signing in, you agree to our{" "}
-          <Link href="/terms" className="text-accent hover:underline">
-            Terms of Service
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy" className="text-accent hover:underline">
-            Privacy Policy
-          </Link>
-        </p>
+       
       </div>
    
   );
