@@ -16,6 +16,8 @@ import {
   CheckCircle,
   X
 } from "lucide-react";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
+import CDNImage from "@/components/CDNImage";
 
 export default function DashboardBrandsPage() {
   const [brands, setBrands] = useState([]);
@@ -286,12 +288,14 @@ console.log(brands);
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
+                        <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center overflow-hidden relative">
                           {brand.logo ? (
-                            <img
+                            <CDNImage
                               src={brand.logo}
                               alt={brand.brandName}
-                              className="w-full h-full object-contain"
+                              fallbackType="brand"
+                              fill
+                              className="object-contain"
                             />
                           ) : (
                             <Building2 className="w-5 h-5 text-muted-foreground" />

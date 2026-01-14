@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { 
@@ -20,6 +19,8 @@ import {
   Tag,
   Info
 } from "lucide-react";
+
+import CDNImage from "@/components/CDNImage";
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -52,7 +53,8 @@ export default function ProductDetailsPage() {
     };
     fetchProduct();
   }, [params.id]);
-console.log("products details",product);
+
+  console.log("products details", product);
 
   const handleAddToCart = () => {
     // Add to cart logic here
@@ -135,9 +137,10 @@ console.log("products details",product);
             <div className="space-y-4">
               <div className="bg-card border border-border/50 rounded-2xl p-8 aspect-square flex items-center justify-center relative overflow-hidden group">
                 {product.thumbnail ? (
-                  <img
+                  <CDNImage
                     src={product.thumbnail}
                     alt={product.productName}
+                    fallbackType="product"
                     width={500}
                     height={500}
                     className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300"

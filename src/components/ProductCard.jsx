@@ -1,9 +1,10 @@
-import { Heart, Star, ShoppingCart } from "lucide-react";
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import CDNImage from "./CDNImage";
 
 const ProductCard = ({ product }) => {
-  // ডিসকাউন্ট আছে কিনা চেক করা
+ 
   const hasDiscount = product.discount?.enabled && product.originalPrice > product.finalPrice;
 
   return (
@@ -12,10 +13,13 @@ const ProductCard = ({ product }) => {
         
         {/* Image Section */}
         <div className="bg-muted aspect-square flex items-center justify-center relative overflow-hidden">
-          <img
-            src={product.thumbnail || "/placeholder.jpg"}
+          <CDNImage
+            src={product.thumbnail}
             alt={product.productName}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fallbackType="product"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           
           <button className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm rounded-full p-2 hover:bg-primary hover:text-primary-foreground transition-colors opacity-0 group-hover:opacity-100 z-10">
@@ -30,7 +34,7 @@ const ProductCard = ({ product }) => {
               </div>
             )}
             {!product.inStock && (
-              <div className="bg-destructive text-destructive-foreground px-2 py-1 rounded-lg text-[10px] font-bold uppercase">
+              <div className="bg-destructive text-black px-2 py-1 rounded-lg text-[10px] font-bold uppercase">
                 Out of Stock
               </div>
             )}
