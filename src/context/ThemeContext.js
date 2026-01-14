@@ -42,7 +42,7 @@ const useThemeStore = create(
       },
     }),
     {
-      name: 'theme-storage', // localStorage কী
+      name: 'theme-storage', 
       onRehydrateStorage: () => (state) => {
         // Apply theme immediately after hydration
         if (state) {

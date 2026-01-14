@@ -47,7 +47,10 @@ export default function DashboardLayout({ children }) {
     );
   }
 
-  
+  // If no user after hydration, don't render anything (redirect will happen)
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen">
