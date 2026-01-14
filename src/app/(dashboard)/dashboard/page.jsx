@@ -167,75 +167,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Authorized Modules Table */}
-      <div className="bg-card border border-border/50 rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-border/50 bg-muted/30">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="font-bold text-foreground">Authorized Modules</h3>
-              <p className="text-sm text-muted-foreground">Your access permissions</p>
-            </div>
-          </div>
-        </div>
-        
-        {user?.permissions?.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border/50 bg-muted/20">
-                  <th className="text-left p-4 font-semibold text-foreground text-sm">Module Name</th>
-                  <th className="text-left p-4 font-semibold text-foreground text-sm">Sub-menus</th>
-                  <th className="text-left p-4 font-semibold text-foreground text-sm">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/50">
-                {user.permissions.map((perm, index) => (
-                  <tr key={perm.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-r from-accent/20 to-accent/30 rounded-lg flex items-center justify-center">
-                          <div className="w-2 h-2 bg-accent rounded-full"></div>
-                        </div>
-                        <span className="font-medium text-foreground">{perm.label}</span>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex flex-wrap gap-1">
-                        {perm.children?.map((child, idx) => (
-                          <span 
-                            key={idx}
-                            className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-md"
-                          >
-                            {child.label}
-                          </span>
-                        )) || (
-                          <span className="text-xs text-muted-foreground italic">No sub-menus</span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
-                        <CheckCircle className="w-3 h-3" />
-                        Active
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <AlertCircle className="w-8 h-8 text-muted-foreground" />
-            </div>
-            <p className="text-muted-foreground">No modules assigned to your account</p>
-          </div>
-        )}
-      </div>
+   
     </div>
   );
 }

@@ -5,11 +5,6 @@
 
 const CDN_BASE_URL = process.env.NEXT_PUBLIC_CDN_BASEURL;
 
-/**
- * Check if a string is a UUID
- * @param {string} str - String to check
- * @returns {boolean}
- */
 export function isUUID(str) {
   if (!str || typeof str !== 'string') return false;
   
@@ -18,11 +13,7 @@ export function isUUID(str) {
   return uuidPattern.test(str);
 }
 
-/**
- * Resolve image URL from UUID or return the URL as-is
- * @param {string} imageValue - UUID or URL string
- * @returns {string} - Resolved CDN URL or original URL
- */
+
 export function resolveImageUrl(imageValue) {
   // Return empty string for null/undefined
   if (!imageValue) return '';
@@ -46,21 +37,13 @@ export function resolveImageUrl(imageValue) {
   return `${CDN_BASE_URL}/${imageValue}`;
 }
 
-/**
- * Resolve multiple image URLs
- * @param {string[]} images - Array of UUIDs or URLs
- * @returns {string[]} - Array of resolved URLs
- */
+
 export function resolveImageUrls(images) {
   if (!Array.isArray(images)) return [];
   return images.map(resolveImageUrl).filter(Boolean);
 }
 
-/**
- * Get fallback image URL
- * @param {string} type - Type of fallback (product, brand, category, user)
- * @returns {string} - Fallback image URL
- */
+
 export function getFallbackImage(type = 'product') {
   const fallbacks = {
     product: '/luxury-product-showcase.jpg',
@@ -72,11 +55,7 @@ export function getFallbackImage(type = 'product') {
   return fallbacks[type] || fallbacks.product;
 }
 
-/**
- * Resolve product images with fallback
- * @param {object} product - Product object
- * @returns {object} - Product with resolved image URLs
- */
+
 export function resolveProductImages(product) {
   if (!product) return null;
   
