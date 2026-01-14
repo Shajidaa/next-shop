@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Shop - E-commerce Application
 
-## Getting Started
+A modern e-commerce application built with Next.js 14+ App Router, featuring separate marketing and dashboard layouts with authentication.
 
-First, run the development server:
+## 🤖 AI Tools Used
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Kiro AI Assistant** - Primary development assistant for:
+  - Project architecture and structure
+  - Component creation and refactoring
+  - Layout implementation
+  - Authentication flow
+  - API integration
+  - Bug fixing and optimization
+
+## 💬 Prompting Approach
+
+### Initial Setup
+- Started with backend API endpoint information
+- Requested specific features (customer addresses page)
+- Provided API response structure for accurate implementation
+
+### Iterative Development
+1. **Feature Requests**: Clear, specific requests like "create customer address management page"
+2. **Problem Solving**: Reported errors directly (e.g., "404 Not Found", "user redirects to login")
+3. **Refinements**: Asked for improvements (e.g., "match background colors", "add metadata")
+4. **Architecture Changes**: Requested structural changes (e.g., "separate marketing and dashboard layouts")
+
+### Effective Prompting Patterns
+- ✅ "Make the addresses page" → Clear goal
+- ✅ "Solve the errors" → Direct problem statement
+- ✅ "If user not found, redirect to login" → Specific requirement
+- ✅ "Add metadata for all pages, only title" → Precise scope
+
+## 🛠️ Manual Changes Made
+
+### None Required
+All code was generated and implemented by the AI assistant with no manual intervention needed. The AI:
+- Created proper file structure
+- Implemented authentication logic
+- Set up route groups for layouts
+- Fixed bugs and errors autonomously
+- Refactored components for better architecture
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── (marketing)/          # Public pages with Navbar + Footer
+│   │   ├── layout.jsx
+│   │   ├── page.js           # Home
+│   │   ├── products/         # Product listing & details
+│   │   ├── login/
+│   │   └── register/
+│   │
+│   ├── (dashboard)/          # Protected pages with Sidebar + Topbar
+│   │   ├── layout.jsx
+│   │   └── dashboard/
+│   │       ├── page.jsx      # Dashboard home
+│   │       ├── addresses/    # Customer addresses
+│   │       └── brands/       # Brand management
+│   │
+│   ├── api/                  # API routes
+│   ├── layout.js             # Root layout
+│   ├── loading.jsx           # Global loading
+│   └── not-found.jsx         # Global 404
+│
+├── components/
+│   ├── auth/                 # Authentication components
+│   ├── dashboard/            # Dashboard-specific components
+│   └── ...                   # Shared components
+│
+├── context/                  # State management
+│   ├── authStore.js          # Authentication state
+│   └── ThemeContext.js       # Theme state
+│
+└── utils/
+    └── proxy.js              # API proxy with auth handling
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Dual Layout System
+- **Marketing Layout**: Navbar + Footer for public pages
+- **Dashboard Layout**: Sidebar + Topbar for authenticated pages
+- Route groups `(marketing)` and `(dashboard)` for clean separation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Authentication
+- Login/Register with form validation
+- Protected dashboard routes
+- Automatic redirect to login if unauthorized
+- API proxy with token management
 
-## Learn More
+### Customer Addresses
+- View all customer addresses
+- Add new addresses with full form
+- Address type selection (shipping/billing)
+- Default address marking
 
-To learn more about Next.js, take a look at the following resources:
+### UI/UX
+- Dark mode support
+- Responsive design
+- Loading states
+- Custom 404 pages
+- Proper SEO metadata
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Install dependencies
+npm install
 
-## Deploy on Vercel
+# Set up environment variables
+cp .env.example .env
+# Add your API_URL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run development server
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000)
+
+## 🔑 Environment Variables
+
+```env
+NEXT_PUBLIC_API_URL=your_api_url_here
+```
+
+## 📝 Development Notes
+
+### Component Architecture
+- Server components for pages (better SEO)
+- Client components for interactivity
+- Proper separation of concerns
+
+### Authentication Flow
+1. Dashboard layout checks for user
+2. Redirects to login if not authenticated
+3. API proxy handles 401/403 responses
+4. Automatic logout and redirect on auth failure
+
+### Metadata Strategy
+- Static metadata for server components
+- Dynamic `document.title` for client components
+- Consistent branding across all pages
+
+## 🎨 Tech Stack
+
+- **Framework**: Next.js 14+ (App Router)
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Icons**: Lucide React
+- **Authentication**: Custom JWT implementation
+
+## 📄 License
+
+This project was built with AI assistance for educational purposes.
