@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import  useAuthStore  from "@/context/authStore";
 import { Eye, EyeOff, Mail, Lock, Loader2, ArrowRight } from "lucide-react";
 
+export const metadata = {
+  title: 'Explor Products | Next Shop',
+
+}
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuthStore();

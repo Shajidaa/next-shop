@@ -16,7 +16,7 @@ import {
   CheckCircle,
   X
 } from "lucide-react";
-import { usePageMetadata } from "@/hooks/usePageMetadata";
+
 import CDNImage from "@/components/CDNImage";
 
 export default function DashboardBrandsPage() {
@@ -84,6 +84,7 @@ console.log(brands);
     setSearchTerm("");
     setSelectedBrands([]);
   };
+
 
   return (
     <div className="space-y-6">

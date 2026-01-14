@@ -21,13 +21,16 @@ import {
 } from "lucide-react";
 
 import CDNImage from "@/components/CDNImage";
+export const metadata = {
+  title: 'Explor Products | Next Shop',
 
+}
 export default function ProductDetailsPage() {
   const params = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
+
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   useEffect(() => {
@@ -54,12 +57,8 @@ export default function ProductDetailsPage() {
     fetchProduct();
   }, [params.id]);
 
-  console.log("products details", product);
 
-  const handleAddToCart = () => {
-    // Add to cart logic here
-    console.log(`Adding ${quantity} of product ${product.productId} to cart`);
-  };
+
 
   const handleQuantityChange = (change) => {
     const newQuantity = quantity + change;
@@ -325,7 +324,7 @@ export default function ProductDetailsPage() {
                   {/* Action Buttons */}
                   <div className="flex gap-3">
                     <button 
-                      onClick={handleAddToCart}
+                     
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
                     >
                       <ShoppingCart className="w-5 h-5" />

@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const metadata = {
+  title: 'Next Shop',
 
-
+}
+  
 
 export default function RootLayout({ children }) {
   return (

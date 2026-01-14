@@ -13,7 +13,10 @@ import {
 } from "lucide-react";
 import CategoryFilter from "@/components/category";
 import ProductCard from "@/components/ProductCard";
+export const metadata = {
+  title: 'Explor Products | Next Shop',
 
+}
 export default function ProductsPage() {
   const searchParams = useSearchParams();
   const [products, setProducts] = useState([]);
