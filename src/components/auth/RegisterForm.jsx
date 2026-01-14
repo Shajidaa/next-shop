@@ -65,10 +65,10 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
       )}
 
       {/* Name Fields */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 ">
         <div className="space-y-2">
           <label className="text-sm font-semibold text-foreground block">
-            First Name
+             Name
           </label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
@@ -138,7 +138,7 @@ export default function RegisterForm({ onSubmit, serverError, loading }) {
           </label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-accent transition-colors">
-              <Phone size={18} />
+              <Phone size={11} />
             </div>
             <input
               type="tel"
