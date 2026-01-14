@@ -5,10 +5,7 @@ import Link from "next/link";
 import  useAuthStore  from "@/context/authStore";
 import { UserPlus, ArrowRight } from "lucide-react";
 import RegisterForm from "@/components/auth/RegisterForm";
-export const metadata = {
-  title: 'Register | Next Shop',
 
-}
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser } = useAuthStore();

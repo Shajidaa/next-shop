@@ -1,17 +1,8 @@
 "use client";
 import useThemeStore from '@/context/ThemeContext';
-import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react'
-import { Navbar } from '../Navbar';
-import Footer from '../Footer';
+import  { useEffect } from 'react'
 
-export default function LayoutContent( {children}) {
-
-   
-  const pathname = usePathname();
-  const isDashboard = pathname?.startsWith('/dashboard');
-
-    function ThemeProvider({ children }) {
+export default function LayoutContent({ children }) {
   const { theme, applyTheme, _hasHydrated } = useThemeStore();
 
   useEffect(() => {
@@ -21,15 +12,5 @@ export default function LayoutContent( {children}) {
   }, [_hasHydrated, theme, applyTheme]);
 
   return children;
-}
-
-  return (
-    <ThemeProvider>
-      {!isDashboard && <Navbar />}
-      {children}
-      {!isDashboard && <Footer/>}
-    </ThemeProvider>
-
-  )
 }
 

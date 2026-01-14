@@ -21,10 +21,7 @@ import {
 } from "lucide-react";
 
 import CDNImage from "@/components/CDNImage";
-export const metadata = {
-  title: 'Explor Products | Next Shop',
 
-}
 export default function ProductDetailsPage() {
   const params = useParams();
   const [product, setProduct] = useState(null);
