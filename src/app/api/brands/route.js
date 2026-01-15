@@ -1,10 +1,8 @@
-
-
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     const tenantValue = process.env.NEXT_PUBLIC_TENANT_HEADER;
 
     if (!baseUrl || !tenantValue) {

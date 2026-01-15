@@ -5,6 +5,7 @@ import CategoryShowcase from "@/components/CategoryShowcase";
 import FeaturesSection from "@/components/Home/FeaturesSection";
 import CTA from "@/components/Home/CTA";
 import FeaturedProductsSection from "@/components/Home/FeaturedProducts";
+import Category from "@/components/Home/Category";
 
 export default function Home() {
 
@@ -15,7 +16,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Category Showcase Section */}
-      <CategoryShowcase />
+      <Category/>
 
      {/* Featured Products Section */}
  

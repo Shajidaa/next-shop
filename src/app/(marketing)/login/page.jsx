@@ -4,6 +4,8 @@ export const metadata = {
   title: 'Login | Next Shop',
 };
 
-export default function LoginPage() {
+export default  function LoginPage() {
+ 
+   
   return <LoginFormComponent />;
 }

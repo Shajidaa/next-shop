@@ -20,24 +20,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
-export default function CategoryShowcase() {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("/api/categories");
-        const data = await response.json();
-        setCategories(data.data || []);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCategories();
-  }, []);
+export default async function CategoryShowcase({categories=[]}) {
 
   // Enhanced category icons and colors mapping
   const getCategoryData = (categoryName) => {
@@ -51,30 +34,7 @@ export default function CategoryShowcase() {
     };
   };
 
-  if (loading) {
-    return (
-      <section className="py-20 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-sm mb-6">
-              <Sparkles className="w-4 h-4" />
-              Shop by Category
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Explore Our Categories
-            </h2>
-            <div className="flex items-center justify-center py-12">
-              <div className="text-center">
-                <Loader2 className="w-8 h-8 animate-spin text-accent mx-auto mb-4" />
-                <p className="text-muted-foreground">Loading categories...</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
+ 
   if (!categories || categories.length === 0) {
     return (
       <section className="py-20 bg-muted/20">

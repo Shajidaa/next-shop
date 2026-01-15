@@ -1,57 +1,30 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { 
-  Search, 
-  Filter, 
-  Loader2,
-  Package,
-  X
-} from "lucide-react";
+import { Search, Filter, Package, X } from "lucide-react";
 import CategoryFilter from "../category";
 import ProductCard from "../ProductCard";
 
-export default function ProductPageSection() {
- 
+export default function ProductPageSection({ products = [] }) {
   const searchParams = useSearchParams();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [sortBy, setSortBy] = useState("name");
   const [showFilters, setShowFilters] = useState(false);
 
   // Initialize category from URL params
   useEffect(() => {
-    const categoryFromUrl = searchParams.get('category');
+    const categoryFromUrl = searchParams.get("category");
     if (categoryFromUrl) {
       setSelectedCategory(categoryFromUrl);
-      setShowFilters(true); // Show filters when coming from category link
+      setShowFilters(true);
     }
   }, [searchParams]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/products");
-        const data = await response.json();
-        setProducts(data.data);
-        setFilteredProducts(data.data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    let filtered = products.filter((product) => {
+    let filtered = products?.filter((product) => {
       const matchesSearch =
         product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.category?.categoryName
@@ -64,7 +37,7 @@ export default function ProductPageSection() {
     });
 
     // Sort products
-    filtered.sort((a, b) => {
+    filtered?.sort((a, b) => {
       switch (sortBy) {
         case "price-low":
           return Number(a.finalPrice || 0) - Number(b.finalPrice || 0);
@@ -87,6 +60,7 @@ export default function ProductPageSection() {
     setSortBy("name");
   };
 
+
   return (
     <div className="min-h-screen ">
       {/* Hero Header */}
@@ -98,7 +72,8 @@ export default function ProductPageSection() {
               Discover Amazing Products
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              Browse our curated collection of premium products designed to enhance your lifestyle
+              Browse our curated collection of premium products designed to
+              enhance your lifestyle
             </p>
           </div>
         </div>
@@ -148,8 +123,8 @@ export default function ProductPageSection() {
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl transition-all text-sm sm:text-base font-medium min-w-0 ${
-                    showFilters 
-                      ? "bg-primary text-primary-foreground" 
+                    showFilters
+                      ? "bg-primary text-primary-foreground"
                       : "bg-input hover:bg-muted border border-border"
                   }`}
                 >
@@ -162,10 +137,12 @@ export default function ProductPageSection() {
             {/* Active Filters Display */}
             {(searchTerm || selectedCategory) && (
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium">Active filters:</span>
+                <span className="text-xs sm:text-sm text-muted-foreground font-medium">
+                  Active filters:
+                </span>
                 {searchTerm && (
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium">
-                    <span>Search: "{searchTerm}"</span>
+                    <span>Search: &rdquo;{searchTerm}&rdquo;</span>
                     <button
                       onClick={() => setSearchTerm("")}
                       className="hover:bg-accent/20 rounded-full p-0.5"
@@ -199,7 +176,9 @@ export default function ProductPageSection() {
           {showFilters && (
             <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-muted/30 rounded-lg sm:rounded-xl border border-border/50">
               <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="font-semibold text-foreground text-sm sm:text-base">Filter by Category</h3>
+                <h3 className="font-semibold text-foreground text-sm sm:text-base">
+                  Filter by Category
+                </h3>
                 <button
                   onClick={clearFilters}
                   className="text-xs sm:text-sm text-accent hover:text-accent/80 font-medium"
@@ -221,26 +200,24 @@ export default function ProductPageSection() {
       {/* Products Section */}
       <section className="py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {loading ? (
-            <div className="flex items-center justify-center py-16 sm:py-20">
-              <div className="text-center">
-                <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 animate-spin text-accent mx-auto mb-3 sm:mb-4" />
-                <p className="text-muted-foreground text-sm sm:text-base">Loading amazing products...</p>
-              </div>
-            </div>
-          ) : filteredProducts.length > 0 ? (
+          {filteredProducts?.length > 0 ? (
             <>
               {/* Results Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                   <h2 className="text-xl sm:text-2xl font-bold text-foreground">
-                    {searchTerm ? `Search Results` : selectedCategory ? `Category Results` : `All Products`}
+                    {searchTerm
+                      ? `Search Results`
+                      : selectedCategory
+                      ? `Category Results`
+                      : `All Products`}
                   </h2>
                   <span className="inline-flex items-center px-2.5 py-1 bg-accent/10 text-accent rounded-full text-xs sm:text-sm font-medium w-fit">
-                    {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+                    {filteredProducts?.length}{" "}
+                    {filteredProducts?.length === 1 ? "product" : "products"}
                   </span>
                 </div>
-                
+
                 {(searchTerm || selectedCategory) && (
                   <button
                     onClick={clearFilters}
@@ -255,10 +232,7 @@ export default function ProductPageSection() {
               {/* Products Grid */}
               <div className="grid gap-4 sm:gap-6 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.productId}
-                    product={product}
-                  />
+                  <ProductCard key={product.productId} product={product} />
                 ))}
               </div>
             </>
@@ -271,10 +245,9 @@ export default function ProductPageSection() {
                 No products found
               </h3>
               <p className="text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto text-sm sm:text-base">
-                {searchTerm || selectedCategory 
+                {searchTerm || selectedCategory
                   ? "Try adjusting your search or filter criteria to find what you're looking for."
-                  : "No products are available at the moment."
-                }
+                  : "No products are available at the moment."}
               </p>
               {(searchTerm || selectedCategory) && (
                 <button
@@ -292,4 +265,3 @@ export default function ProductPageSection() {
     </div>
   );
 }
-

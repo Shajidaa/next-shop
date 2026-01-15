@@ -35,7 +35,7 @@ export function Navbar() {
   const isActivePath = (path) => pathname === path;
 
 
-console.log(user);
+
 
 
   return (

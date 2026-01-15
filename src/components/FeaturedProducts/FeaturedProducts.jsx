@@ -18,35 +18,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
-const FeaturedProducts = () => {
-  const [featured, setFeaturedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const FeaturedProducts = ({featured=[]}) => {
 
-  useEffect(() => {
-    const fetchFeaturedProducts = async () => {
-      try {
-        const response = await fetch("/api/featured");
-        const data = await response.json();
-        setFeaturedProducts(data.data);
-      } catch (error) {
-        console.error("Error fetching featured:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFeaturedProducts();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-accent mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading featured products...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!featured || featured.length === 0) {
     return (

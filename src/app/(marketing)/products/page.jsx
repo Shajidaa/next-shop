@@ -1,12 +1,16 @@
-
-
-import ProductPageSection from '@/components/products/ProductPageSection'
-import React from 'react'
+import ProductPageSection from "@/components/products/ProductPageSection";
+import React from "react";
 export const metadata = {
-  title: 'Products | Next Shop',
+  title: "Products | Next Shop",
 };
-export default function ProductPage() {
-  return (
-    <ProductPageSection/>
-  )
+export default async function ProductPage() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/products`
+  );
+
+  const result = await response.json();
+
+  const data = result?.data || [];
+
+  return <ProductPageSection products={data} />;
 }

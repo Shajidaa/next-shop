@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function GET(request) {
   // Use environment variables for flexibility
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const tenantValue = process.env.NEXT_PUBLIC_TENANT_HEADER;
 
   try {

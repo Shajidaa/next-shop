@@ -4,7 +4,10 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 
-export default function FeaturedProductsSection() {
+export default async function FeaturedProductsSection() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/featureProducts`);
+        const res = await response.json();
+        const data=res.data || [];
   return (
     
       <section className="py-12 sm:py-16 md:py-20 bg-muted/20">
@@ -19,7 +22,7 @@ export default function FeaturedProductsSection() {
           </div>
           
           <div className="mb-8 sm:mb-12">
-            <FeaturedProducts />
+            <FeaturedProducts featured={data} />
           </div>
           
           <div className="text-center">
