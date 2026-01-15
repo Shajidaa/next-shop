@@ -5,7 +5,11 @@ import { ArrowRight } from 'lucide-react'
 
 
 export default async function FeaturedProductsSection() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/featureProducts`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/featureProducts`, {
+    headers: {
+      "X-Tenant": process.env.NEXT_PUBLIC_TENANT_HEADER,
+    },
+  });
         const res = await response.json();
         const data=res.data || [];
   return (

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import axios from 'axios';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const useAuthStore = create(
   persist(
@@ -9,28 +8,36 @@ const useAuthStore = create(
       loading: false,
       _hasHydrated: false,
 
-      // Set hydration status
-      setHasHydrated: (state) => {
-        set({ _hasHydrated: state });
+      setHasHydrated: (state) => set({ _hasHydrated: state }),
+
+      // Internal helper for API calls
+      apiCall: async (endpoint, options = {}) => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}${endpoint}`, {
+          ...options,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Tenant': process.env.NEXT_PUBLIC_TENANT_HEADER,
+            ...options.headers,
+          },
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.message || data?.error || 'Something went wrong');
+        return data?.data || data;
       },
 
-      
       fetchProfile: async (token) => {
         try {
-          const res = await fetch("/api/auth/me", {
-            method: "GET",
+          return await get().apiCall('/v2/auth/me', {
             headers: { Authorization: `Bearer ${token}` },
           });
-          const profileData = await res.json();
-          return profileData?.data || profileData;
         } catch (err) {
           return null;
         }
       },
 
-      // লগইন বা রেজিস্ট্রেশন 
       handleAuthSuccess: async (token, permissions) => {
-        const profile = await get().fetchProfile(token); // get() দিয়ে স্টোরের অন্য ফাংশন কল করা যায়
+        const profile = await get().fetchProfile(token);
         const fullUser = {
           ...(profile || {}),
           permissions: permissions || [],
@@ -40,68 +47,57 @@ const useAuthStore = create(
         return fullUser;
       },
 
-      // লগইন ফাংশন
       login: async (credentials) => {
         set({ loading: true });
         try {
-          const res = await axios.post("/api/auth/login", credentials);
-          const data = res.data?.data || res.data;
-          
-         
-          
+          const data = await get().apiCall('/v2/auth/login', {
+            method: 'POST',
+            body: JSON.stringify(credentials),
+          });
+
           if (data.token) {
             await get().handleAuthSuccess(data.token, data.permissions);
-            set({ loading: false });
             return { success: true };
-          } else {
-            set({ loading: false });
-            return { success: false, error: "No token received" };
           }
+          throw new Error("No token received");
         } catch (error) {
-         
+          return { success: false, error: error.message };
+        } finally {
           set({ loading: false });
-          return {
-            success: false,
-            error: error.response?.data?.message || error.response?.data?.error || "Login failed",
-          };
         }
       },
 
-      // রেজিস্ট্রেশন ফাংশন
       register: async (formData) => {
         set({ loading: true });
         try {
-          const res = await axios.post("/api/auth/register", formData);
-          const data = res.data?.data || res.data;
+          const data = await get().apiCall('/v2/auth/register', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+          });
 
-          
           if (data.token) {
             await get().handleAuthSuccess(data.token, data.permissions);
+            return { success: true };
           }
-          set({ loading: false });
-          return { success: true };
+          throw new Error("Registration failed");
         } catch (error) {
-         
+          return { success: false, error: error.message };
+        } finally {
           set({ loading: false });
-          return {
-            success: false,
-            error: error.response?.data?.message || error.response?.data?.error || "Registration failed",
-          };
         }
       },
 
-      // লগআউট ফাংশন
       logout: () => {
         set({ user: null });
-        // Check if we're in the browser before accessing localStorage
         if (typeof window !== 'undefined') {
-          localStorage.removeItem("auth-storage"); 
+          // localStorage.removeItem("auth-storage"); // Persist middleware handles this usually
           window.location.href = "/";
         }
       },
     }),
     {
       name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage), // Explicitly use localStorage
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },

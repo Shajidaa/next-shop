@@ -14,8 +14,7 @@ export async function GET() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-
-        "x-tenant-id": tenantValue,
+        "X-Tenant": tenantValue,
       },
     });
 

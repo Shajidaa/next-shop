@@ -14,10 +14,11 @@ export function LogoutButton() {
     setError(null);
 
     try {
-      const response = await fetch("/api/logout", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-Tenant": process.env.NEXT_PUBLIC_TENANT_HEADER,
         },
         body: JSON.stringify({}),
       });

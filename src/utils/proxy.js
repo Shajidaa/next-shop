@@ -24,6 +24,7 @@ export async function proxyFetch(endpoint, options = {}) {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
+      'X-Tenant': process.env.NEXT_PUBLIC_TENANT_HEADER,
       ...options.headers,
     },
   });

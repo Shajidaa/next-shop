@@ -2,9 +2,9 @@
 
 A modern e-commerce application built with Next.js 14+ App Router, featuring separate marketing and dashboard layouts with authentication.
 
-## 🤖 AI Tools Used
+##  AI Tools Used
 
-- **Kiro AI Assistant** - Primary development assistant for:
+- ** AI Assistant** - Primary development assistant for:
   - Project architecture and structure
   - Component creation and refactoring
   - Layout implementation
@@ -12,24 +12,7 @@ A modern e-commerce application built with Next.js 14+ App Router, featuring sep
   - API integration
   - Bug fixing and optimization
 
-## 💬 Prompting Approach
 
-### Initial Setup
-- Started with backend API endpoint information
-- Requested specific features (customer addresses page)
-- Provided API response structure for accurate implementation
-
-### Iterative Development
-1. **Feature Requests**: Clear, specific requests like "create customer address management page"
-2. **Problem Solving**: Reported errors directly (e.g., "404 Not Found", "user redirects to login")
-3. **Refinements**: Asked for improvements (e.g., "match background colors", "add metadata")
-4. **Architecture Changes**: Requested structural changes (e.g., "separate marketing and dashboard layouts")
-
-### Effective Prompting Patterns
-- ✅ "Make the addresses page" → Clear goal
-- ✅ "Solve the errors" → Direct problem statement
-- ✅ "If user not found, redirect to login" → Specific requirement
-- ✅ "Add metadata for all pages, only title" → Precise scope
 
 ## 🛠️ Manual Changes Made
 
@@ -141,8 +124,8 @@ NEXT_PUBLIC_API_URL=your_api_url_here
 
 ### Metadata Strategy
 - Static metadata for server components
-- Dynamic `document.title` for client components
-- Consistent branding across all pages
+
+
 
 ## 🎨 Tech Stack
 

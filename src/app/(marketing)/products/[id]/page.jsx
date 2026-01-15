@@ -11,7 +11,11 @@ export default async function ProductDetailsPage({ params }) {
   const { id } = await params;
   
   
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/products/${id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/client/v1/products/${id}`, {
+      headers: {
+        "X-Tenant": process.env.NEXT_PUBLIC_TENANT_HEADER,
+      },
+    });
     const data = await response.json();
     const productData = data.data || data;
 
