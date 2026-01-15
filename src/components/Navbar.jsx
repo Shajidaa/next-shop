@@ -40,19 +40,19 @@ export function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky  top-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-card/95 backdrop-blur-md shadow-lg border-b border-border/50"
           : "bg-card shadow-sm border-b border-border/30"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
+      <div className="max-w-7xl mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-12 xs:h-14 sm:h-16">
           {/* Logo */}
           <div className="shrink-0">
             <Link href="/" className="flex items-center group">
               <div className="relative">
-                <span className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                <span className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                   NextShop
                 </span>
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300"></div>
@@ -161,29 +161,29 @@ export function Navbar() {
           </div>
 
           {/* Mobile/Tablet menu button */}
-          <div className="lg:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-1.5 xs:space-x-2">
             {/* Theme Toggle for Mobile */}
             <ThemeToggle />
             
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-all duration-200"
+              className="relative p-1.5 xs:p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-all duration-200"
               aria-label="Toggle menu"
             >
-              <div className="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-center items-center">
+              <div className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex flex-col justify-center items-center">
                 <span
-                  className={`block h-0.5 w-5 sm:w-6 bg-current transform transition-all duration-300 ${
-                    isMenuOpen ? "rotate-45 translate-y-0.5 sm:translate-y-1" : "-translate-y-0.5 sm:-translate-y-1"
+                  className={`block h-0.5 w-4 xs:w-5 sm:w-6 bg-current transform transition-all duration-300 ${
+                    isMenuOpen ? "rotate-45 translate-y-0.5 xs:translate-y-0.5 sm:translate-y-1" : "-translate-y-0.5 xs:-translate-y-0.5 sm:-translate-y-1"
                   }`}
                 ></span>
                 <span
-                  className={`block h-0.5 w-5 sm:w-6 bg-current transition-all duration-300 ${
+                  className={`block h-0.5 w-4 xs:w-5 sm:w-6 bg-current transition-all duration-300 ${
                     isMenuOpen ? "opacity-0" : "opacity-100"
                   }`}
                 ></span>
                 <span
-                  className={`block h-0.5 w-5 sm:w-6 bg-current transform transition-all duration-300 ${
-                    isMenuOpen ? "-rotate-45 -translate-y-0.5 sm:-translate-y-1" : "translate-y-0.5 sm:translate-y-1"
+                  className={`block h-0.5 w-4 xs:w-5 sm:w-6 bg-current transform transition-all duration-300 ${
+                    isMenuOpen ? "-rotate-45 -translate-y-0.5 xs:-translate-y-0.5 sm:-translate-y-1" : "translate-y-0.5 xs:translate-y-0.5 sm:translate-y-1"
                   }`}
                 ></span>
               </div>
@@ -198,12 +198,12 @@ export function Navbar() {
           isMenuOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-card/95 backdrop-blur-md border-t border-border/50 p-3 sm:p-4 space-y-2">
+        <div className="bg-card/95 backdrop-blur-md border-t border-border/50 p-2 xs:p-3 sm:p-4 space-y-1.5 xs:space-y-2">
           {/* Mobile Navigation Links */}
           <Link
             href="/"
             onClick={() => setIsMenuOpen(false)}
-            className={`block px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-all duration-200 ${
+            className={`block px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 rounded-lg font-medium text-xs xs:text-sm sm:text-base transition-all duration-200 ${
               isActivePath("/")
                 ? "text-accent bg-accent/10 border-l-4 border-accent"
                 : "text-foreground hover:text-accent hover:bg-muted/50"
@@ -215,7 +215,7 @@ export function Navbar() {
           <Link
             href="/products"
             onClick={() => setIsMenuOpen(false)}
-            className={`block px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-all duration-200 ${
+            className={`block px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 rounded-lg font-medium text-xs xs:text-sm sm:text-base transition-all duration-200 ${
               isActivePath("/products")
                 ? "text-accent bg-accent/10 border-l-4 border-accent"
                 : "text-foreground hover:text-accent hover:bg-muted/50"
@@ -229,7 +229,7 @@ export function Navbar() {
             <Link
               href="/dashboard"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-all duration-200 ${
+              className={`block px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 rounded-lg font-medium text-xs xs:text-sm sm:text-base transition-all duration-200 ${
                 pathname.startsWith("/dashboard")
                   ? "text-accent bg-accent/10 border-l-4 border-accent"
                   : "text-foreground hover:text-accent hover:bg-muted/50"
@@ -240,19 +240,19 @@ export function Navbar() {
           )}
 
           {/* Mobile User Section */}
-          <div className="pt-3 sm:pt-4 border-t border-border/50 space-y-2 sm:space-y-3">
+          <div className="pt-2 xs:pt-3 sm:pt-4 border-t border-border/50 space-y-1.5 xs:space-y-2 sm:space-y-3">
             {user ? (
               <>
                 {/* User Info */}
-                <div className="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-muted/50 rounded-lg">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-primary-foreground font-semibold text-sm sm:text-base shrink-0">
+                <div className="flex items-center space-x-2 xs:space-x-2 sm:space-x-3 px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 bg-muted/50 rounded-lg">
+                  <div className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-primary-foreground font-semibold text-xs xs:text-sm sm:text-base shrink-0">
                     {(user.data?.name || user.username || "A").charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-foreground text-sm sm:text-base truncate">
+                    <p className="font-semibold text-foreground text-xs xs:text-sm sm:text-base truncate">
                       {user.data?.name || user.username || "Admin"}
                     </p>
-                    <p className="text-muted-foreground text-xs sm:text-sm truncate">
+                    <p className="text-muted-foreground text-[10px] xs:text-xs sm:text-sm truncate">
                       {user.data?.email || user.email}
                     </p>
                   </div>
@@ -261,24 +261,24 @@ export function Navbar() {
                 {/* Logout Button */}
                 <button
                   onClick={handleLogout}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-destructive font-medium border border-destructive/20 rounded-lg hover:bg-destructive/10 active:bg-destructive/15 transition-all duration-200"
+                  className="w-full px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 text-xs xs:text-sm sm:text-base text-destructive font-medium border border-destructive/20 rounded-lg hover:bg-destructive/10 active:bg-destructive/15 transition-all duration-200"
                 >
                   Logout
                 </button>
               </>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-1.5 xs:space-y-2">
                 <Link
                   href="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-center px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-foreground font-medium border border-border rounded-lg hover:bg-muted/50 active:bg-muted transition-all duration-200"
+                  className="block text-center px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 text-xs xs:text-sm sm:text-base text-foreground font-medium border border-border rounded-lg hover:bg-muted/50 active:bg-muted transition-all duration-200"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-center px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-primary-foreground font-medium bg-gradient-to-r from-primary to-primary/90 rounded-lg hover:from-primary/90 hover:to-primary active:scale-[0.98] transition-all duration-200 shadow-lg"
+                  className="block text-center px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 text-xs xs:text-sm sm:text-base text-primary-foreground font-medium bg-gradient-to-r from-primary to-primary/90 rounded-lg hover:from-primary/90 hover:to-primary active:scale-[0.98] transition-all duration-200 shadow-lg"
                 >
                   Register
                 </Link>

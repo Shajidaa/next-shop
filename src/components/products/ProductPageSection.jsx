@@ -81,37 +81,37 @@ export default function ProductPageSection({ products = [] }) {
 
       {/* Search and Filter Bar */}
       <section className="bg-card/80 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
-          <div className="flex flex-col gap-3 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-2 xs:py-3 sm:py-4">
+          <div className="flex flex-col gap-2 xs:gap-3 sm:gap-4">
             {/* Top Row - Search and Main Controls */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+            <div className="flex flex-col sm:flex-row gap-2 xs:gap-3 sm:gap-4 items-stretch sm:items-center">
               {/* Search Bar */}
               <div className="relative flex-1 w-full sm:max-w-md">
-                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
+                <Search className="absolute left-2.5 xs:left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-input border border-border rounded-lg sm:rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring focus:border-accent placeholder:text-muted-foreground text-sm sm:text-base"
+                  className="w-full pl-9 xs:pl-10 sm:pl-12 pr-9 xs:pr-10 py-2 xs:py-2.5 sm:py-3 bg-input border border-border rounded-lg sm:rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring focus:border-accent placeholder:text-muted-foreground text-xs xs:text-sm sm:text-base"
                 />
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
-                    className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    className="absolute right-2.5 xs:right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
                   </button>
                 )}
               </div>
 
               {/* Controls Row */}
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 w-full sm:w-auto">
                 {/* Sort Dropdown */}
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="flex-1 sm:flex-none px-3 sm:px-4 py-2.5 sm:py-3 bg-input border border-border rounded-lg sm:rounded-xl outline-none focus:ring-2 focus:ring-ring focus:border-accent text-sm sm:text-base min-w-0"
+                  className="flex-1 sm:flex-none px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 bg-input border border-border rounded-lg sm:rounded-xl outline-none focus:ring-2 focus:ring-ring focus:border-accent text-xs xs:text-sm sm:text-base min-w-0"
                 >
                   <option value="name">Sort by Name</option>
                   <option value="price-low">Price: Low to High</option>
@@ -122,13 +122,13 @@ export default function ProductPageSection({ products = [] }) {
                 {/* Filter Toggle */}
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl transition-all text-sm sm:text-base font-medium min-w-0 ${
+                  className={`flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 px-2.5 xs:px-3 sm:px-4 py-2 xs:py-2.5 sm:py-3 rounded-lg sm:rounded-xl transition-all text-xs xs:text-sm sm:text-base font-medium min-w-0 ${
                     showFilters
                       ? "bg-primary text-primary-foreground"
                       : "bg-input hover:bg-muted border border-border"
                   }`}
                 >
-                  <Filter className="w-4 h-4" />
+                  <Filter className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
                   <span className="hidden xs:inline">Filters</span>
                 </button>
               </div>
@@ -136,35 +136,35 @@ export default function ProductPageSection({ products = [] }) {
 
             {/* Active Filters Display */}
             {(searchTerm || selectedCategory) && (
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium">
+              <div className="flex items-center gap-1.5 xs:gap-2 flex-wrap">
+                <span className="text-[10px] xs:text-xs sm:text-sm text-muted-foreground font-medium">
                   Active filters:
                 </span>
                 {searchTerm && (
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium">
+                  <div className="inline-flex items-center gap-1 xs:gap-1.5 px-2 xs:px-2.5 py-0.5 xs:py-1 bg-accent/10 text-accent rounded-full text-[10px] xs:text-xs font-medium">
                     <span>Search: &rdquo;{searchTerm}&rdquo;</span>
                     <button
                       onClick={() => setSearchTerm("")}
                       className="hover:bg-accent/20 rounded-full p-0.5"
                     >
-                      <X className="w-3 h-3" />
+                      <X className="w-2.5 h-2.5 xs:w-3 xs:h-3" />
                     </button>
                   </div>
                 )}
                 {selectedCategory && (
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                  <div className="inline-flex items-center gap-1 xs:gap-1.5 px-2 xs:px-2.5 py-0.5 xs:py-1 bg-primary/10 text-primary rounded-full text-[10px] xs:text-xs font-medium">
                     <span>Category</span>
                     <button
                       onClick={() => setSelectedCategory("")}
                       className="hover:bg-primary/20 rounded-full p-0.5"
                     >
-                      <X className="w-3 h-3" />
+                      <X className="w-2.5 h-2.5 xs:w-3 xs:h-3" />
                     </button>
                   </div>
                 )}
                 <button
                   onClick={clearFilters}
-                  className="text-xs text-muted-foreground hover:text-foreground font-medium underline"
+                  className="text-[10px] xs:text-xs text-muted-foreground hover:text-foreground font-medium underline"
                 >
                   Clear all
                 </button>
@@ -174,14 +174,14 @@ export default function ProductPageSection({ products = [] }) {
 
           {/* Category Filter Panel */}
           {showFilters && (
-            <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-muted/30 rounded-lg sm:rounded-xl border border-border/50">
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="font-semibold text-foreground text-sm sm:text-base">
+            <div className="mt-2 xs:mt-3 sm:mt-4 p-2.5 xs:p-3 sm:p-4 bg-muted/30 rounded-lg sm:rounded-xl border border-border/50">
+              <div className="flex items-center justify-between mb-2 xs:mb-3 sm:mb-4">
+                <h3 className="font-semibold text-foreground text-xs xs:text-sm sm:text-base">
                   Filter by Category
                 </h3>
                 <button
                   onClick={clearFilters}
-                  className="text-xs sm:text-sm text-accent hover:text-accent/80 font-medium"
+                  className="text-[10px] xs:text-xs sm:text-sm text-accent hover:text-accent/80 font-medium"
                 >
                   Clear All
                 </button>
@@ -198,21 +198,21 @@ export default function ProductPageSection({ products = [] }) {
       </section>
 
       {/* Products Section */}
-      <section className="py-6 sm:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-4 xs:py-6 sm:py-8">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
           {filteredProducts?.length > 0 ? (
             <>
               {/* Results Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 xs:gap-3 sm:gap-4 mb-4 xs:mb-6 sm:mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 xs:gap-2 sm:gap-4">
+                  <h2 className="text-lg xs:text-xl sm:text-2xl font-bold text-foreground">
                     {searchTerm
                       ? `Search Results`
                       : selectedCategory
                       ? `Category Results`
                       : `All Products`}
                   </h2>
-                  <span className="inline-flex items-center px-2.5 py-1 bg-accent/10 text-accent rounded-full text-xs sm:text-sm font-medium w-fit">
+                  <span className="inline-flex items-center px-2 xs:px-2.5 py-0.5 xs:py-1 bg-accent/10 text-accent rounded-full text-[10px] xs:text-xs sm:text-sm font-medium w-fit">
                     {filteredProducts?.length}{" "}
                     {filteredProducts?.length === 1 ? "product" : "products"}
                   </span>
@@ -221,30 +221,30 @@ export default function ProductPageSection({ products = [] }) {
                 {(searchTerm || selectedCategory) && (
                   <button
                     onClick={clearFilters}
-                    className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+                    className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 text-[10px] xs:text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
                   >
-                    <X className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <X className="w-3 h-3 xs:w-3 xs:h-3 sm:w-4 sm:h-4" />
                     Clear filters
                   </button>
                 )}
               </div>
 
               {/* Products Grid */}
-              <div className="grid gap-4 sm:gap-6 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid gap-3 xs:gap-4 sm:gap-6 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.productId} product={product} />
                 ))}
               </div>
             </>
           ) : (
-            <div className="text-center py-16 sm:py-20">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <Package className="w-8 h-8 sm:w-10 sm:h-10 text-muted-foreground" />
+            <div className="text-center py-12 xs:py-16 sm:py-20">
+              <div className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-3 xs:mb-4 sm:mb-6">
+                <Package className="w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 text-muted-foreground" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+              <h3 className="text-base xs:text-lg sm:text-xl font-semibold text-foreground mb-1.5 xs:mb-2">
                 No products found
               </h3>
-              <p className="text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto text-sm sm:text-base">
+              <p className="text-muted-foreground mb-3 xs:mb-4 sm:mb-6 max-w-md mx-auto text-xs xs:text-sm sm:text-base">
                 {searchTerm || selectedCategory
                   ? "Try adjusting your search or filter criteria to find what you're looking for."
                   : "No products are available at the moment."}
@@ -252,9 +252,9 @@ export default function ProductPageSection({ products = [] }) {
               {(searchTerm || selectedCategory) && (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-primary text-primary-foreground rounded-lg sm:rounded-xl hover:bg-primary/90 transition-colors text-sm sm:text-base font-medium"
+                  className="inline-flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 sm:px-6 py-2 xs:py-2.5 sm:py-3 bg-primary text-primary-foreground rounded-lg sm:rounded-xl hover:bg-primary/90 transition-colors text-xs xs:text-sm sm:text-base font-medium"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
                   Clear filters
                 </button>
               )}

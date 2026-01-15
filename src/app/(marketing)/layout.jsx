@@ -4,10 +4,11 @@ import Footer from '@/components/Footer';
 
 export default function MarketingLayout({ children }) {
   return (
-    <>
+    <div >
     <Navbar/>
-      {children}
-     <Footer/>
-    </>
+  
+   {children}
+   <Footer/>
+    </div>
   );
 }

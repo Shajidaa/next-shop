@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Custom breakpoint for extra small devices (320px) */
+@custom-media --xs (min-width: 320px);
+@custom-media --sm (min-width: 640px);
+
 :root {
   /* Modern e-commerce color scheme: deep charcoal background, white text, accent gold */
   --background: oklch(0.98 0 0);
