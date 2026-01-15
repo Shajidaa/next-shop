@@ -58,30 +58,30 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section - Hidden on auth pages */}
         {!isAuthPage && (
-          <div className="py-12 border-b border-border/50">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-sm mb-4">
-                <Sparkles className="w-4 h-4" />
+          <div className="py-8 sm:py-12 border-b border-border/50">
+            <div className="max-w-4xl mx-auto text-center px-4">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-xs sm:text-sm mb-3 sm:mb-4">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                 Stay Updated
               </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
               Get the Latest Updates
             </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
               Subscribe to our newsletter and be the first to know about new products, exclusive offers, and premium collections.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto">
               <div className="flex-1 relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring focus:border-accent placeholder:text-muted-foreground"
+                  className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 text-sm sm:text-base bg-card border border-border rounded-lg sm:rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-ring focus:border-accent placeholder:text-muted-foreground"
                 />
               </div>
-              <button className="group px-6 py-3 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+              <button className="group px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold rounded-lg sm:rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                 Subscribe
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
@@ -89,37 +89,37 @@ export default function Footer() {
         )}
 
         {/* Main Footer Content */}
-        <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="py-8 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12">
             {/* Brand Section */}
-            <div className="lg:col-span-2">
-              <Link href="/" className="inline-block mb-6">
-                <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <div className="sm:col-span-2 lg:col-span-2">
+              <Link href="/" className="inline-block mb-4 sm:mb-6">
+                <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                   NextShop
                 </span>
               </Link>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
                 Your trusted destination for premium products and exceptional service. 
                 We curate the finest collection for those who appreciate quality and excellence.
               </p>
               
               {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <Mail className="w-4 h-4 text-accent" />
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-muted-foreground">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
                   </div>
-                  <span>hello@nextshop.com</span>
+                  <span className="truncate">hello@nextshop.com</span>
                 </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <Phone className="w-4 h-4 text-accent" />
+                <div className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-muted-foreground">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
                   </div>
                   <span>+1 (555) 123-4567</span>
                 </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-accent" />
+                <div className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-muted-foreground">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-accent/10 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent" />
                   </div>
                   <span>123 Premium Street, Luxury City</span>
                 </div>
@@ -128,13 +128,13 @@ export default function Footer() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-semibold text-foreground mb-6">Quick Links</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold text-sm sm:text-base text-foreground mb-4 sm:mb-6">Quick Links</h4>
+              <ul className="space-y-2 sm:space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
+                      className="text-sm sm:text-base text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                       {link.name}
@@ -146,13 +146,13 @@ export default function Footer() {
 
             {/* Support */}
             <div>
-              <h4 className="font-semibold text-foreground mb-6">Customer Support</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold text-sm sm:text-base text-foreground mb-4 sm:mb-6">Customer Support</h4>
+              <ul className="space-y-2 sm:space-y-3">
                 {supportLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
+                      className="text-sm sm:text-base text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                       {link.name}
@@ -164,13 +164,13 @@ export default function Footer() {
 
             {/* Legal */}
             <div>
-              <h4 className="font-semibold text-foreground mb-6">Legal</h4>
-              <ul className="space-y-3">
+              <h4 className="font-semibold text-sm sm:text-base text-foreground mb-4 sm:mb-6">Legal</h4>
+              <ul className="space-y-2 sm:space-y-3">
                 {legalLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
+                      className="text-sm sm:text-base text-muted-foreground hover:text-accent transition-colors duration-200 flex items-center gap-2 group"
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                       {link.name}
@@ -183,28 +183,28 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="py-8 border-t border-border/50">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="py-6 sm:py-8 border-t border-border/50">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
             {/* Copyright */}
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
               <span>&copy; {currentYear} NextShop. Made with</span>
-              <Heart className="w-4 h-4 text-red-500 fill-current" />
+              <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-current" />
               <span>for premium shopping.</span>
             </div>
 
             {/* Social Links */}
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground mr-2">Follow us:</span>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <span className="text-xs sm:text-sm text-muted-foreground mr-1 sm:mr-2">Follow us:</span>
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
                   <Link
                     key={social.name}
                     href={social.href}
-                    className="w-10 h-10 bg-muted/50 hover:bg-accent/10 border border-border/50 hover:border-accent/30 rounded-lg flex items-center justify-center text-muted-foreground hover:text-accent transition-all duration-200 group"
+                    className="w-8 h-8 sm:w-10 sm:h-10 bg-muted/50 hover:bg-accent/10 border border-border/50 hover:border-accent/30 rounded-lg flex items-center justify-center text-muted-foreground hover:text-accent transition-all duration-200 group"
                     aria-label={social.name}
                   >
-                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" />
                   </Link>
                 );
               })}
